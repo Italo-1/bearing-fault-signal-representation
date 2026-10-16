@@ -7,16 +7,19 @@
 - **Revista:** Ingenius, Revista de Ciencia y Tecnología (Universidad
   Politécnica Salesiana, Cuenca, Ecuador). eISSN 1390-860X, pISSN 1390-650X.
 - **URL del sistema de envío:** OJS en https://ingenius.ups.edu.ec
-- **Archivo principal a subir:** `paper/Revista_Ingenius_Ecuador/articulo_p7.pdf`
-  (la revista pide el PDF como archivo original cuando el manuscrito viene de
-  LaTeX). **Está anonimizado**: `\autores{}` y `\adscripcionautor{}` van vacíos
-  a propósito, ver la nota de doble ciego más abajo.
-- **Archivos complementarios:**
-  - Comprimido con el código fuente LaTeX: `articulo_p7.tex`, `refs.bib`,
-    `ingenius.cls` y la carpeta `figures/`.
-  - Cada figura en archivo aparte, vectorial o a 300 dpi:
-    `figures/fig1_p7.pdf` … `figures/fig4_p7.pdf`.
-  - Carta de presentación: `paper/cover_letter.md`.
+- **Todo lo que se sube está listo en `paper/envio/`:**
+  - **Archivo principal:** `articulo_p7.pdf` (la revista pide el PDF como
+    archivo original cuando el manuscrito viene de LaTeX). **Anonimizado** en el
+    texto y en las propiedades del archivo (campo *Author* vacío).
+  - **Código fuente:** `articulo_p7_fuente_latex.zip` — `.tex`, `.bib`, `.bbl`,
+    `ingenius.cls`, archivos de configuración y figuras; solo lo que LaTeX lee
+    al compilar. Probado: compila por sí solo y da el mismo PDF. Sin datos que
+    identifiquen a los autores.
+  - **Figuras sueltas:** `figuras/fig1_p7.pdf` … `fig4_p7.pdf`, vectoriales.
+  - **Carta de presentación:** `paper/cover_letter.md` (va en el formulario o
+    como archivo aparte; lleva la declaración de IA y el DOI para el editor).
+  - Para regenerar la carpeta tras cualquier cambio: recompilar el `.tex` y
+    volver a copiar; los auxiliares (`.aux`, `.log`, `.bbl` viejo) no se suben.
 - **¿Cobra APC?** No. Evidencia guardada en `JOURNAL.md` y en
   `paper/evidencia/` (HTML de la página de acceso abierto, capturado el
   24/08/2026). Licencia CC BY-NC-SA 4.0.
@@ -37,10 +40,17 @@
   vibration analysis.
 - **Revisores sugeridos:** la revista no los pide.
 - **Repositorio de código:** https://github.com/Italo-1/bearing-fault-signal-representation
-- **DOI de Zenodo:** 10.5281/zenodo.22907922 — https://doi.org/10.5281/zenodo.22907922
-  (DOI de concepto: apunta siempre a la última versión publicada). **En el
-  manuscrito se cita solo el DOI, no la URL de GitHub**, para no romper el
-  anonimato de la revisión ciega.
+- **DOI de Zenodo:**
+  - **De concepto (el que se cita): 10.5281/zenodo.22907921** — apunta siempre
+    a la última versión del repositorio.
+  - De la versión v1.0.0: 10.5281/zenodo.22907922 — fija esa instantánea.
+- **El DOI NO va en el manuscrito de revisión.** El registro de Zenodo muestra
+  el usuario de GitHub (`Italo-1`) y el nombre del primer autor, así que citarlo
+  desanonimiza el artículo igual que la URL. El PDF dice que el DOI se retiene
+  por la revisión ciega; **el DOI se le da al editor en la carta de
+  presentación**. Al aceptarse, sustituir la frase de la sección *Data
+  availability* del `.tex` por la que está anotada en el comentario justo
+  encima de ella.
 - **Notas:**
   - **Revisión doble ciego.** El archivo tiene que estar anonimizado *también en
     las propiedades del PDF*, no solo en el texto. Comprobar antes de subir.

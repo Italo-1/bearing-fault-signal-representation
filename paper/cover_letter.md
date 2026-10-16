@@ -56,9 +56,11 @@ CRediT format in the manuscript. The authors declare no conflict of interest.
 No funding supported this work beyond the resources of the participating
 institution. The CWRU records are public and cited as such; the analysis code,
 the per-fold results and the scripts that generate every table and figure are
-deposited in a public repository with a Zenodo DOI, cited in the data
-availability statement, so that every figure in the manuscript can be regenerated
-from the raw files.
+deposited in a public repository, archived on Zenodo with the DOI
+10.5281/zenodo.22907921, so that every figure in the manuscript can be
+regenerated from the raw files. Because that record identifies the authors, the
+DOI has been withheld from the anonymized manuscript and is given here for the
+editor only; we will add it to the data availability statement upon acceptance.
 
 Regarding the journal's policy on artificial intelligence, we declare the
 following. Claude, an assistant developed by Anthropic, was used under the direct

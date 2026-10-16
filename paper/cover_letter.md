@@ -1,7 +1,7 @@
 # Cover letter — *Ingenius, Revista de Ciencia y Tecnología*
 
 **To:** Editor-in-Chief, *Ingenius*, Universidad Politécnica Salesiana, Cuenca, Ecuador
-**Manuscript:** "Signal representation and load transfer in bearing fault classification: a record-level evaluation on the CWRU dataset"
+**Manuscript:** "Signal representation and load transfer in bearing fault classification"
 **Date:** [DD/MM/2026]
 
 Dear Editor,

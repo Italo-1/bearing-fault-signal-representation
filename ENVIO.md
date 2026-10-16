@@ -16,8 +16,17 @@
     al compilar. Probado: compila por sí solo y da el mismo PDF. Sin datos que
     identifiquen a los autores.
   - **Figuras sueltas:** `figuras/fig1_p7.pdf` … `fig4_p7.pdf`, vectoriales.
-  - **Carta de presentación:** `paper/cover_letter.md` (va en el formulario o
-    como archivo aparte; lleva la declaración de IA y el DOI para el editor).
+  - **Carta en el formato oficial de Ingenius (obligatoria):**
+    `Cover_Letter_INGENIUS_P7.docx`, en "Archivos complementarios" del OJS.
+    Generada con `paper/llenar_carta_ingenius.py` sobre la plantilla oficial
+    (`paper/evidencia/Cover_Letter_Revista_INGENIUS_2025.docx`, normas §3.1.1).
+    **Completar a mano antes de subir:** día y mes, número de documento de
+    identidad de cada autor y las tres firmas.
+  - **Comentarios para el editor:** el texto de `paper/cover_letter.md`, pegado
+    en el cuadro de comentarios del OJS. Lleva el DOI para el editor.
+  - **Título:** la plantilla oficial limita cada título a 80 caracteres. La carta
+    ya lleva los títulos cortos; el manuscrito tiene que llevar los mismos
+    (`\titulo` y `\tituloa` del `.tex`).
   - Para regenerar la carpeta tras cualquier cambio: recompilar el `.tex` y
     volver a copiar; los auxiliares (`.aux`, `.log`, `.bbl` viejo) no se suben.
 - **¿Cobra APC?** No. Evidencia guardada en `JOURNAL.md` y en

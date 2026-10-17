@@ -186,11 +186,10 @@ reviewed in \cite{randall2011}.
 Data-driven diagnosis adds a decision on top of that physics: the signal is
 converted into some representation and a classifier is trained on it. The choice
 of representation is normally justified by comparing several candidates on the
-same data and recommending the most accurate. The dataset of the Case Western
-Reserve University Bearing Data Center \cite{cwru} is the standard reference for
-those experiments, to the point that a benchmark study was devoted to
-categorising it and recommending how it should be used \cite{smith2015}, with
-later work proposing further improvements to that practice \cite{hendriks2022}.
+same data and recommending the most accurate. The Case Western Reserve
+University (CWRU) Bearing Data Center dataset \cite{cwru} is the standard
+reference for those experiments, with a benchmark study devoted to categorising
+it \cite{smith2015} and later work refining that practice \cite{hendriks2022}.
 
 Accuracy within a single
 operating condition saturates near unity, so the ranking it produces separates
@@ -226,9 +225,8 @@ faults were compared on rotating machines without a learned model
 in the journal to estimate fault distance \cite{gomez2023}; the wavelet
 representation below uses the same family with five levels.
 
-This study measures what happens to four representations when the test load
-differs from the training load, under a partition designed so that the numbers
-are not inflated by overlap. The contributions of this work are: (1) a
+This study measures how four representations behave when the test load differs
+from the training load. The contributions of this work are: (1) a
 record-level evaluation protocol for the CWRU dataset in which the split is
 performed by source record and, within a record, by purged contiguous blocks,
 verified by a leakage check with a negative control; (2) a 4$\times$4 matrix of
@@ -236,7 +234,7 @@ macro-F1 by (training load, test load) pair for four representations and three
 classifiers, reported per fold; (3) evidence that no representation holds a
 consistent advantage across classifiers, the representation by classifier
 interaction being the largest term of the factorial model; and (4) an ablation,
-specified in the protocol before the data were split, showing that removing
+specified before the experiment was run, showing that removing
 amplitude information does not improve cross-load transfer.
 
 \section{Materials and Methods}
@@ -381,8 +379,8 @@ Two of the four discard amplitude by construction, the wavelet returning
 relative band energy and the spectrogram being normalised per image, while the
 other two keep the absolute scale that varies with load. Comparing them as they
 stand would settle any hypothesis about amplitude through the preprocessing
-rather than the representation, so an ablation was fixed before results were
-examined: time-domain statistics and FFT magnitude recomputed on windows divided
+rather than the representation, so an ablation was fixed before the experiment
+was run: time-domain statistics and FFT magnitude recomputed on windows divided
 by their RMS value, with SVM-RBF and Random Forest over the twelve off-diagonal
 pairs. After normalisation the RMS descriptor equals one in all 5887 windows and
 kurtosis is unchanged.
@@ -689,10 +687,6 @@ contains zero, so the ablation separates the two classifiers rather
 than ruling out any benefit: normalisation is harmful with the forest and of
 uncertain benefit with the SVM.
 
-Removing amplitude therefore does not help transfer with the forest, and the
-ordering observed above requires an explanation other than amplitude dependence
-alone.
-
 \subsection{Limitations}
 
 Each combination of fault type and diameter in the CWRU dataset is a single
@@ -762,8 +756,7 @@ retaining absolute amplitude degrade because amplitude scales with load, was
 not supported. RMS normalisation improved cross-load
 transfer in none of the four tested combinations by an interval excluding zero,
 and degraded it with Random Forest by 0.149 for time-domain statistics and 0.133
-for FFT magnitude. On this evidence, removing absolute amplitude does not buy
-transfer.
+for FFT magnitude.
 
 External validation on a different machine would separate the degradation
 attributable to load from that masked by reusing one physical bearing per fault

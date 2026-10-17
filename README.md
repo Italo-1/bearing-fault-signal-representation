@@ -1588,7 +1588,14 @@ antes de aplicarla; no se aplicó nada solo porque la revisión lo dijera.
   como quinta representación, curva de pérdida de la CNN y bootstrap por carga.
 - Recompilado: 9 páginas (la nueva solo tiene el final de las referencias), 0
   errores; el único Overfull es el de siempre, idéntico en la versión anterior.
-- **Extensión: +96 palabras netas** tras acortar los propios añadidos. Contra las
-  normas (4 000-6 500) no hay problema. Contra el límite de la plantilla que se
-  adoptó el 24/08 (5 000-6 000) quedamos unas 40 palabras por encima con el
-  método de recuento del 03/09. **Pendiente de decidir.**
+- **Extensión.** Las correcciones sumaban +96 palabras netas, unas 40 por encima
+  del límite de la plantilla adoptado el 24/08 (5 000-6 000). Por decisión del
+  usuario se recortaron 62 palabras de prosa en cuatro pasajes redundantes
+  (introducción, cierre de 3.5 y conclusiones), verificado por script que no se
+  perdió ni cambió ninguna cifra. Saldo neto: +28 palabras frente a la versión
+  previa a la revisión, unas 5 969 con el método de recuento del 03/09.
+- **Exactitud sobre la ablación.** El artículo decía que estaba "specified in the
+  protocol before the data were split". Esta bitácora la fija el 22/08, al
+  escribir `02_preprocess.py` y antes de correr el experimento, pero no estaba en
+  el protocolo del 20/08. Ahora dice "specified/fixed before the experiment was
+  run" en la contribución (4) y en el método.

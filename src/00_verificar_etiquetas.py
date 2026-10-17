@@ -17,8 +17,15 @@ caracteristicos, en multiplos de la frecuencia de giro del eje:
 
     BPFO  3.5848   paso de elementos por la pista externa
     BPFI  5.4152   paso de elementos por la pista interna
-    BSF   4.7135   giro del elemento rodante (suele verse tambien 2xBSF)
+    BSF   2.3568   giro del elemento rodante (convencion de libro)
     FTF   0.3983   jaula
+
+Correccion del 17/10/2026 (revision cruzada de linea A). CWRU tabula la
+frecuencia del elemento rodante como 4.7135, y ese valor YA ES 2xBSF: con la
+geometria del 6205 (Bd = 0.3126 in, Pd = 1.537 in) el BSF convencional es
+(Pd/2Bd)(1 - (Bd/Pd)^2) = 2.3567. La version anterior tomaba 4.7135 como BSF y
+calculaba su doble, de modo que el criterio "2xBSF" buscaba en realidad en
+4xBSF. Ahora BSF = 4.7135 / 2 y 2xBSF = 4.7135, como en la fisica.
 
     python src/00_verificar_etiquetas.py
 """
@@ -37,7 +44,10 @@ RAIZ = Path(__file__).resolve().parent.parent
 CRUDO = RAIZ / "data" / "raw"
 FS = 12_000.0
 
-FACTORES = {"BPFO": 3.5848, "BPFI": 5.4152, "BSF": 4.7135, "FTF": 0.3983}
+# CWRU publica 4.7135 para el elemento rodante, que es 2xBSF (ver docstring).
+FACTOR_ELEMENTO_RODANTE_CWRU = 4.7135
+FACTORES = {"BPFO": 3.5848, "BPFI": 5.4152,
+            "BSF": FACTOR_ELEMENTO_RODANTE_CWRU / 2, "FTF": 0.3983}
 
 # Que frecuencia debe dominar en cada clase. El defecto en elemento rodante
 # suele manifestarse con mas fuerza en 2xBSF que en BSF.
@@ -194,14 +204,23 @@ def main() -> int:
     print(f"  contrastada con el maximo observado en la clase Normal ({umbral:.1f}):")
 
     confirmados = 0
+    estrictos = 0
     for _, fila in bolas.iterrows():
         firma = max(fila["BSF"], fila["2xBSF"], fila["2xBSF_FTF"])
+        # Criterio estricto: solo la firma fisica del defecto de bola, 2xBSF y
+        # sus bandas laterales de jaula, sin la linea BSF fundamental. Es la
+        # cifra que cita el articulo.
+        firma_estricta = max(fila["2xBSF"], fila["2xBSF_FTF"])
+        if firma_estricta > 2 * umbral:
+            estrictos += 1
         if firma > 2 * umbral:
             confirmados += 1
         else:
             print(f"    DEBIL: {fila['archivo']} firma {firma:.1f}")
 
-    print(f"  {confirmados}/{len(bolas)} con firma muy por encima del control negativo")
+    print(f"  {estrictos}/{len(bolas)} con 2xBSF o sus bandas laterales por encima "
+          f"del doble del control negativo")
+    print(f"  {confirmados}/{len(bolas)} si se incluye tambien la linea BSF")
 
     print(f"\nControl negativo (Normal): pico maximo = {umbral:.2f}")
     print("Ninguna frecuencia caracteristica destaca en el rodamiento sano, que es"

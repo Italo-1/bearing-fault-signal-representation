@@ -93,9 +93,10 @@ TAMANO_ESPECTROGRAMA = 64  # entrada de la CNN 2D, cuadrada
 # inferencial. NO es cuadrada, y el motivo esta medido: la STFT nativa es de
 # 33x63, de modo que 64 columnas conservan el eje temporal intacto -2.67 ms por
 # columna, entre 2.3 y 3.5 columnas por impacto- mientras que una rejilla
-# cuadrada de la misma dimension total dejaria 10.67 ms por columna y borraria
-# el tren de impactos, que es justo la firma que nperseg = 64 existe para
-# resolver. La frecuencia se reduce a la mitad, 375 Hz, con la resonancia de
+# cuadrada de la misma dimension total (32x32) dejaria 5.33 ms por columna,
+# menos de dos columnas por periodo BPFI (6.2 ms), y borraria el tren de
+# impactos, que es justo la firma que nperseg = 64 existe para resolver.
+# (Corregido el 17/10/2026: decia 10.67 ms, que corresponde a 16 columnas.) La frecuencia se reduce a la mitad, 375 Hz, con la resonancia de
 # 2-5.5 kHz repartida en unas 9 de las 16 filas. Los 1024 valores resultantes
 # quedan ademas junto a los 1025 de la FFT, lo que reduce el confuso de
 # dimensionalidad en lugar de agravarlo.

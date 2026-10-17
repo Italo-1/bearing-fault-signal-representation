@@ -69,7 +69,8 @@ RESUMEN = (
     "interacción representación-clasificador por encima de todo efecto "
     "principal. Una ablación de normalización de amplitud no mejoró la "
     "transferencia y la degradó con Random Forest. La elección de "
-    "representación interactúa con el clasificador.")
+    "representación interactúa con el clasificador en lugar de definir un "
+    "orden general.")
 ABSTRACT = (
     "Comparisons of signal representations for bearing fault diagnosis are "
     "usually reported under a single operating condition, where accuracy "

@@ -151,7 +151,7 @@ la interacción representación-clasificador por encima de todo efecto
 principal. Una
 ablación de normalización de amplitud no mejoró la
 transferencia y la degradó con Random Forest. La elección de representación
-interactúa con el clasificador.
+interactúa con el clasificador en lugar de definir un orden general.
 \\[-0.3cm]
 \keywords{bearing fault diagnosis, data leakage, domain shift, Friedman test,
 signal representation, vibration analysis}
@@ -194,7 +194,7 @@ later work proposing further improvements to that practice \cite{hendriks2022}.
 
 Accuracy within a single
 operating condition saturates near unity, so the ranking it produces separates
-methods by hundredths of a point and does not survive a change of dataset. And
+methods by hundredths of a point and does not survive a change of dataset, and
 the way the data are partitioned decides the result: bearing vibration is
 usually cut into overlapping windows, and if those windows are shuffled before
 splitting, windows sharing samples end up on both sides and the classifier
@@ -222,9 +222,9 @@ temperature and injection pressure have served as measured indicators instead of
 a signal representation, with a multifactorial ANOVA establishing which factors
 matter \cite{llanes2019}. Earlier, two measurement methods for stator lamination
 faults were compared on rotating machines without a learned model
-\cite{salazar2012}. The Daubechies db4 wavelet at level four, the family used
-for the wavelet representation below, has been applied in the journal to
-estimate fault distance \cite{gomez2023}.
+\cite{salazar2012}. A four-level Daubechies db4 decomposition has been applied
+in the journal to estimate fault distance \cite{gomez2023}; the wavelet
+representation below uses the same family with five levels.
 
 This study measures what happens to four representations when the test load
 differs from the training load, under a partition designed so that the numbers
@@ -260,15 +260,17 @@ position.
 
 Labels were verified against the physics of the bearing rather than third-party
 tables. For the SKF 6205-2RS JEM drive-end bearing the characteristic order
-factors are BPFO 3.5848, BPFI 5.4152, BSF 4.7135 and FTF 0.3983 times the shaft
-frequency. Envelope analysis (band-pass filtering in the 2--5.5 kHz resonance,
-Hilbert transform, spectrum) confirmed the inner race labels in 12 of 12 records
-and the outer race labels in 9 of 12, the expected order dominating by a factor
-of three and five. In the healthy records no characteristic frequency stood out,
-an order of magnitude below the fault records. Ball faults required the sideband
-criterion at twice BSF modulated by FTF, a defective ball striking both races
-and crossing the load zone at the cage rate; under it 7 of 12 records exceeded
-the healthy baseline. All 40 records were kept, since discarding those with a
+factors are BPFO 3.5848, BPFI 5.4152, BSF 2.3568 and FTF 0.3983 times the shaft
+frequency; the rolling-element value of 4.7135 tabulated by CWRU corresponds to
+$2\times$BSF, not to BSF. Envelope analysis (band-pass filtering in the
+2--5.5 kHz resonance, Hilbert transform, spectrum) confirmed the inner race
+labels in 12 of 12 records and the outer race labels in 9 of 12, the expected
+order dominating by a factor of three and five. In the healthy records no
+characteristic frequency stood out, an order of magnitude below the fault
+records. Ball faults required the sideband criterion at $2\times$BSF modulated
+by FTF, a defective ball striking both races and crossing the load zone at the
+cage rate; under it 11 of 12 records exceeded twice the largest peak of the
+healthy records, the weakest signatures being those at 0.021 in. All 40 records were kept, since discarding those with a
 weak signature would bias the result upwards, and fault diameter is a covariate
 for subgroup reporting.
 
@@ -347,9 +349,10 @@ the time axis. At 1797 rpm the impacts occur every 9.3 ms (BPFO) and 6.2 ms
 (BPFI), so a hop of 2.67 ms places 2.3 to 3.5 frames within each impact period,
 while a 512-sample window would give 23.4 Hz per band but a hop of 21.3 ms,
 erasing the impact train. For the same reason the spectrogram enters the
-comparison as a $16\times64$ grid of 1024 values rather than a square one, which
-at that size would leave 10.67 ms per column; the $16\times64$ grid halves the
-frequency axis to 375 Hz. A $64\times64$ image of the same transform feeds the
+comparison as a $16\times64$ grid of 1024 values rather than a square
+$32\times32$ one, which would leave 5.33 ms per column, fewer than two columns
+per BPFI impact period; the $16\times64$ grid keeps the 2.67 ms hop and halves
+the frequency axis to 375 Hz. A $64\times64$ image of the same transform feeds the
 convolutional network.
 
 Table \ref{tab:repr} summarises the four. The scaler is fitted inside the
@@ -363,7 +366,7 @@ amplitude of each representation.}
 \resizebox{\columnwidth}{!}{
 \begin{tabular}{lrlcc}
 \toprule
-Representation & Dim. & Effective resolution & Amp.-inv. & In comp. \\
+Representation & Dim. & Effective resolution & Amp.-inv. & Enters comparison \\
 \midrule
 Time-domain statistics       & 12   & ---                  & no  & yes \\
 FFT magnitude                & 1025 & 5.86 Hz              & no  & yes \\
@@ -415,7 +418,7 @@ cells $\times$ 5 folds, that is 960 fits, plus 80 for the convolutional
 reference and 240 for the ablation. The seed was fixed at 42 and results stored
 per fold. The network ran on an RTX 4050 laptop GPU and the rest on CPU.
 
-The statistical procedure was decided before results were examined, following \cite{demsar2006}. The primary test is a Friedman test
+The statistical procedure was fixed before the comparison was run, following \cite{demsar2006}. The primary test is a Friedman test
 over the four representations with the twelve off-diagonal pairs as blocks
 ($N = 12$, $k = 4$), using macro-F1 averaged over the three classifiers and the
 five folds, with a Nemenyi post-hoc test and a critical difference diagram.
@@ -468,7 +471,8 @@ Within a single load all four representations exceed 0.95 macro-F1, averaged
 over classifiers: 0.9997 for FFT magnitude, 0.9925 for the spectrogram, 0.9882
 for time-domain statistics and 0.9602 for the wavelet, with the breakdown by
 classifier in Table \ref{tab:f1}. Under four hundredths separate best from worst
-and ten of the twelve representation-classifier combinations sit above 0.98, so
+and ten of the twelve representation-classifier combinations sit at or above
+0.98, so
 a comparison restricted to the training condition separates little.
 
 \begin{table}[H]
@@ -509,11 +513,12 @@ one panel per representation, diagonal boxed. Averaged over the twelve
 off-diagonal cells, the drop from the diagonal is 0.074 for the spectrogram,
 0.0995 for FFT magnitude, 0.1029 for the wavelet and 0.1534 for time-domain
 statistics. Resampling the twelve pairs gives intervals of 0.043--0.105,
-0.080--0.122, 0.073--0.133 and 0.074--0.240, which all overlap. The
-representation retaining absolute amplitude degrades most, but the attribution
-to the time-frequency nature of the representation does not hold, since FFT
-magnitude, which carries no time information, degrades slightly less than the
-wavelet.
+0.080--0.122, 0.073--0.133 and 0.074--0.240, which all overlap; the pairs
+share loads, so the intervals are approximate (Section 3.6). Time-domain
+statistics, which retain absolute amplitude, degrade most, but FFT magnitude,
+which also retains it and carries no time information, degrades slightly less
+than the amplitude-invariant wavelet: the ordering follows neither amplitude
+nor time-frequency content.
 
 Degradation grows with load distance at different rates: at one step the four
 lie between 0.887 and 0.943 and at three steps between 0.655 and 0.880, most of
@@ -521,15 +526,17 @@ the widening from time-domain statistics.
 
 The matrix is also asymmetric. With time-domain statistics, training at 0 HP and
 testing at 1 HP gives 0.795 against 0.678 for the reverse; at maximum separation
-the two directions give 0.771 and 0.539, the worst cell of the matrix. Testing
-at 0 HP is the harder direction throughout, and the healthy class has 233
-windows at 0 HP against about 468 elsewhere.
+the two directions give 0.771 and 0.539, the worst cell of the matrix. With
+statistics and the wavelet, testing at 0 HP is harder in every pair, and the
+healthy class has 233 windows there against about 468 elsewhere; FFT magnitude
+shows the opposite asymmetry, so the imbalance alone does not explain it.
 
 The spectrogram is also the most expensive of the four to extract, 5.96 s over
 the 5887 windows against 0.27 s for FFT magnitude.
 
-The convolutional reference scores 0.971 in-domain, the lowest of the five rows,
-and 0.957 out of domain, the highest, a drop of 0.0135. A training failure
+The convolutional reference scores 0.971 in-domain, below every vector
+representation except the wavelet (0.960), and 0.957 out of domain, the
+highest, a drop of 0.0135. A training failure
 governs both. Trained at 0, 1 and 2 HP it reaches 0.998, 1.000 and 0.992
 in-domain, and 0.892 $\pm$ 0.230 at 3 HP; the deficit is one of the five folds
 at 3 HP, whose four cells fall between 0.396 and 0.489, consistent with the
@@ -556,7 +563,8 @@ advantage in transfer should not be read as one.
 \includegraphics[width=16cm]{figures/fig3_p7.pdf}
 \end{center}
 \caption{Macro-F1 for every (training load, test load) pair, averaged over the
-three vector classifiers and 5 folds. (a) Statistical, (b) FFT, (c) Wavelet db4,
+three vector classifiers and 5 folds. Rows are the training load and columns the
+test load. (a) Statistical, (b) FFT, (c) Wavelet db4,
 (d) STFT spectrogram. The diagonal is a reference cell, boxed for orientation,
 and takes part in neither Friedman nor the ANOVA: with a single Normal recording
 per load it does not admit a record-level split.}
@@ -674,7 +682,8 @@ amplitude-dependent representations. No combination improved by an interval that
 excludes zero, and two degraded. With Random Forest, time-domain statistics lost 0.149 macro-F1 (95 \% CI
 $-0.197$ to $-0.103$, Cliff's delta $-0.472$) and FFT magnitude lost 0.133
 (95 \% CI $-0.151$ to $-0.116$, delta $-0.750$). With SVM-RBF both intervals
-cross zero: $-0.018$ for statistics (95 \% CI $-0.047$ to $+0.011$) and $+0.033$
+cross zero: $-0.018$ for statistics (95 \% CI $-0.047$ to $+0.011$, delta
+$-0.205$) and $+0.033$
 for FFT (95 \% CI $-0.002$ to $+0.067$, delta 0.330). That last interval
 contains zero, so the ablation separates the two classifiers rather
 than ruling out any benefit: normalisation is harmful with the forest and of
@@ -748,8 +757,9 @@ with SVM-RBF and first with the other two. Representation and classifier should
 therefore be chosen together, since a recommendation drawn from one classifier
 does not carry to another.
 
-The mechanism usually offered for the advantage of amplitude-invariant
-representations was not supported. RMS normalisation improved cross-load
+The amplitude mechanism that motivated the ablation, that representations
+retaining absolute amplitude degrade because amplitude scales with load, was
+not supported. RMS normalisation improved cross-load
 transfer in none of the four tested combinations by an interval excluding zero,
 and degraded it with Random Forest by 0.149 for time-domain statistics and 0.133
 for FFT magnitude. On this evidence, removing absolute amplitude does not buy

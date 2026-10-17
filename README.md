@@ -1546,3 +1546,49 @@ anotado en el `.tex`.
   del tope de la plantilla si se cuentan. **Conviene decidirlo antes del envío.**
 - Sigue pendiente lo que no está en el repositorio: nombre y ORCID de los autores,
   y el DOI de Zenodo.
+
+## 17/10 - Italo Tenempaguay — Revisión cruzada de línea A sobre la versión del 16/10
+
+Revisión recibida en `P7_Ingenius_Representacion_Senal_observaciones.md`. Cada
+observación se contrastó contra `results/tables/`, el código y la aritmética
+antes de aplicarla; no se aplicó nada solo porque la revisión lo dijera.
+
+- **BSF (la más seria).** CWRU tabula 4.7135 para el elemento rodante, y ese
+  valor ya es 2xBSF: con la geometría del 6205 el BSF convencional es 2.3567.
+  `src/00_verificar_etiquetas.py` lo tomaba como BSF y buscaba "2xBSF" en
+  4xBSF. Corregido y reejecutado. Las pistas no cambian (12/12 IR, 9/12 OR). En
+  bolas, el umbral del control sano estaba inflado por un pico espurio de
+  111.97 en 100.mat justo en la frecuencia equivocada; con la correcta el máximo
+  del sano es 48.1, y la firma 2xBSF o sus bandas de jaula supera el doble de
+  ese valor en **11 de 12** registros (12/12 si se incluye la línea BSF). Antes
+  decía 7 de 12. La más débil sigue siendo 0.021 in (224.mat), así que el
+  párrafo de la Discusión sobre firmas débiles sigue siendo correcto.
+- **A1** "Testing at 0 HP is the harder direction throughout": solo vale para
+  estadísticos y wavelet; la FFT muestra la asimetría contraria. Acotado, y
+  dicho que el desbalance de la clase sana no la explica por sí solo.
+- **A2** La CNN no es la más baja en dominio: la wavelet (0.960) está debajo.
+- **A3** "The representation retaining absolute amplitude": hay dos (estadísticos
+  y FFT). Reescrito.
+- **A4** Nivel de la wavelet: el nivel 4 era el de Gómez 2023 (verificado en su
+  texto completo); aquí se usan 5. Aclarado.
+- **A5** "10.67 ms": una rejilla cuadrada de 1024 es 32x32 y deja 5.33 ms por
+  columna. Corregido también en el comentario de `src/02_preprocess.py`. El
+  argumento se sostiene con el número correcto (1.16 columnas por periodo BPFI,
+  menos de 2), así que no se cambió el razonamiento.
+- **A6** "ten … above 0.98": nueve por encima y una en 0.980; "at or above".
+- **Menores aplicadas:** frase que empezaba por "And"; pie de la Fig. 3 con
+  fila/columna; "In comp." → "Enters comparison"; final del resumen igualado al
+  abstract (resumen 224 palabras); delta de Cliff que faltaba (−0.205, SVM con
+  estadísticos); "decided before results were examined" → "fixed before the
+  comparison was run" (el protocolo existe en este README con fecha 20/08, pero
+  no hay sello de tiempo independiente); la Discusión ya no atribuye a la
+  literatura un mecanismo sin cita, sino a la hipótesis que motivó la ablación;
+  y se dice que los intervalos sobre los 12 pares son aproximados.
+- **No aplicadas, quedan para decidir en equipo:** varias semillas, envolvente
+  como quinta representación, curva de pérdida de la CNN y bootstrap por carga.
+- Recompilado: 9 páginas (la nueva solo tiene el final de las referencias), 0
+  errores; el único Overfull es el de siempre, idéntico en la versión anterior.
+- **Extensión: +96 palabras netas** tras acortar los propios añadidos. Contra las
+  normas (4 000-6 500) no hay problema. Contra el límite de la plantilla que se
+  adoptó el 24/08 (5 000-6 000) quedamos unas 40 palabras por encima con el
+  método de recuento del 03/09. **Pendiente de decidir.**

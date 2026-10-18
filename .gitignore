@@ -23,3 +23,29 @@ Thumbs.db
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+
+# Documentos internos del proceso (protocolo y bitacora, ficha de la revista,
+# tramite de envio, cartas, revisiones): se mantienen solo en local, como en la
+# linea A. README.md es la portada publica del paquete de reproduccion.
+PROTOCOLO.md
+BITACORA.md
+ENVIO.md
+JOURNAL.md
+paper/cover_letter.md
+paper/declaraciones.md
+paper/tramite/
+paper/envio/
+paper/evidencia/
+paper/revision/
+firmas/
+~$*
+
+# Copias de respaldo y scripts de correccion puntual del manuscrito
+*antes_revision_cruzada*
+paper/corregir_*.py
+paper/aplicar_revision_cruzada.py
+
+# Especificos de este articulo
+paper/manuscript.md
+paper/references.bib
+paper/llenar_carta_ingenius.py

@@ -1,0 +1,236 @@
+carga_excluida,analisis,nivel,estadistico,valor
+ninguna,friedman_principal,,N,12.0
+ninguna,friedman_principal,,chi2,5.200000000000017
+ninguna,friedman_principal,,p,0.15772445039666164
+ninguna,friedman_principal,,W_kendall,0.14444444444444493
+ninguna,friedman_principal,STFT spectrogram,rango_medio,1.8333333333333333
+ninguna,friedman_principal,FFT,rango_medio,2.5
+ninguna,friedman_principal,Statistical,rango_medio,2.6666666666666665
+ninguna,friedman_principal,Wavelet db4,rango_medio,3.0
+ninguna,friedman_SVM-RBF,,chi2,17.100000000000023
+ninguna,friedman_SVM-RBF,,p,0.0006740496331685252
+ninguna,friedman_SVM-RBF,,p_bonferroni_x3,0.0020221488995055756
+ninguna,friedman_SVM-RBF,,W_kendall,0.47500000000000064
+ninguna,friedman_SVM-RBF,STFT spectrogram,rango_medio,1.3333333333333333
+ninguna,friedman_SVM-RBF,Statistical,rango_medio,2.5833333333333335
+ninguna,friedman_SVM-RBF,Wavelet db4,rango_medio,2.5833333333333335
+ninguna,friedman_SVM-RBF,FFT,rango_medio,3.5
+ninguna,friedman_RandomForest,,chi2,13.700000000000017
+ninguna,friedman_RandomForest,,p,0.0033432929655500404
+ninguna,friedman_RandomForest,,p_bonferroni_x3,0.010029878896650121
+ninguna,friedman_RandomForest,,W_kendall,0.38055555555555604
+ninguna,friedman_RandomForest,FFT,rango_medio,1.3333333333333333
+ninguna,friedman_RandomForest,Wavelet db4,rango_medio,2.6666666666666665
+ninguna,friedman_RandomForest,STFT spectrogram,rango_medio,2.9166666666666665
+ninguna,friedman_RandomForest,Statistical,rango_medio,3.0833333333333335
+ninguna,friedman_MLP,,chi2,21.0
+ninguna,friedman_MLP,,p,0.00010527618177149762
+ninguna,friedman_MLP,,p_bonferroni_x3,0.0003158285453144929
+ninguna,friedman_MLP,,W_kendall,0.5833333333333334
+ninguna,friedman_MLP,FFT,rango_medio,1.0833333333333333
+ninguna,friedman_MLP,STFT spectrogram,rango_medio,2.5833333333333335
+ninguna,friedman_MLP,Statistical,rango_medio,3.0833333333333335
+ninguna,friedman_MLP,Wavelet db4,rango_medio,3.25
+ninguna,anova_bloqueada_RxC,,F,5.78201283112966
+ninguna,anova_bloqueada_RxC,,gl,6.0
+ninguna,anova_bloqueada_RxC,,p,2.541947910000011e-05
+ninguna,caida,Statistical,caida,0.15336351113322166
+ninguna,caida,FFT,caida,0.09951310063958685
+ninguna,caida,Wavelet db4,caida,0.1028516706808954
+ninguna,caida,STFT spectrogram,caida,0.07397896075511201
+0,friedman_principal,,N,6.0
+0,friedman_principal,,chi2,12.600000000000009
+0,friedman_principal,,p,0.0055865460973023775
+0,friedman_principal,,W_kendall,0.7000000000000005
+0,friedman_principal,Statistical,rango_medio,1.3333333333333333
+0,friedman_principal,STFT spectrogram,rango_medio,2.0
+0,friedman_principal,FFT,rango_medio,2.8333333333333335
+0,friedman_principal,Wavelet db4,rango_medio,3.8333333333333335
+0,friedman_SVM-RBF,,chi2,15.200000000000003
+0,friedman_SVM-RBF,,p,0.0016534710516881628
+0,friedman_SVM-RBF,,p_bonferroni_x3,0.0049604131550644885
+0,friedman_SVM-RBF,,W_kendall,0.8444444444444446
+0,friedman_SVM-RBF,Statistical,rango_medio,1.5
+0,friedman_SVM-RBF,STFT spectrogram,rango_medio,1.5
+0,friedman_SVM-RBF,Wavelet db4,rango_medio,3.1666666666666665
+0,friedman_SVM-RBF,FFT,rango_medio,3.8333333333333335
+0,friedman_RandomForest,,chi2,9.600000000000009
+0,friedman_RandomForest,,p,0.022290983128701713
+0,friedman_RandomForest,,p_bonferroni_x3,0.06687294938610513
+0,friedman_RandomForest,,W_kendall,0.5333333333333338
+0,friedman_RandomForest,FFT,rango_medio,1.1666666666666667
+0,friedman_RandomForest,Statistical,rango_medio,2.5
+0,friedman_RandomForest,Wavelet db4,rango_medio,3.1666666666666665
+0,friedman_RandomForest,STFT spectrogram,rango_medio,3.1666666666666665
+0,friedman_MLP,,chi2,17.0
+0,friedman_MLP,,p,0.0007067423923370282
+0,friedman_MLP,,p_bonferroni_x3,0.0021202271770110847
+0,friedman_MLP,,W_kendall,0.9444444444444444
+0,friedman_MLP,FFT,rango_medio,1.0
+0,friedman_MLP,Statistical,rango_medio,2.1666666666666665
+0,friedman_MLP,STFT spectrogram,rango_medio,2.8333333333333335
+0,friedman_MLP,Wavelet db4,rango_medio,4.0
+0,anova_bloqueada_RxC,,F,11.662879436666012
+0,anova_bloqueada_RxC,,gl,6.0
+0,anova_bloqueada_RxC,,p,2.1924501745065764e-08
+0,caida,Statistical,caida,0.023838504597465726
+0,caida,FFT,caida,0.07367337033720656
+0,caida,Wavelet db4,caida,0.09772945505797626
+0,caida,STFT spectrogram,caida,0.05188905687222756
+1,friedman_principal,,N,6.0
+1,friedman_principal,,chi2,3.0
+1,friedman_principal,,p,0.3916251762710877
+1,friedman_principal,,W_kendall,0.16666666666666666
+1,friedman_principal,STFT spectrogram,rango_medio,1.8333333333333333
+1,friedman_principal,FFT,rango_medio,2.3333333333333335
+1,friedman_principal,Wavelet db4,rango_medio,2.8333333333333335
+1,friedman_principal,Statistical,rango_medio,3.0
+1,friedman_SVM-RBF,,chi2,8.400000000000006
+1,friedman_SVM-RBF,,p,0.0384293188578884
+1,friedman_SVM-RBF,,p_bonferroni_x3,0.11528795657366521
+1,friedman_SVM-RBF,,W_kendall,0.466666666666667
+1,friedman_SVM-RBF,STFT spectrogram,rango_medio,1.3333333333333333
+1,friedman_SVM-RBF,Wavelet db4,rango_medio,2.3333333333333335
+1,friedman_SVM-RBF,Statistical,rango_medio,3.0
+1,friedman_SVM-RBF,FFT,rango_medio,3.3333333333333335
+1,friedman_RandomForest,,chi2,8.400000000000006
+1,friedman_RandomForest,,p,0.0384293188578884
+1,friedman_RandomForest,,p_bonferroni_x3,0.11528795657366521
+1,friedman_RandomForest,,W_kendall,0.466666666666667
+1,friedman_RandomForest,FFT,rango_medio,1.3333333333333333
+1,friedman_RandomForest,Wavelet db4,rango_medio,2.3333333333333335
+1,friedman_RandomForest,STFT spectrogram,rango_medio,3.0
+1,friedman_RandomForest,Statistical,rango_medio,3.3333333333333335
+1,friedman_MLP,,chi2,9.800000000000011
+1,friedman_MLP,,p,0.020344998515208296
+1,friedman_MLP,,p_bonferroni_x3,0.06103499554562489
+1,friedman_MLP,,W_kendall,0.5444444444444451
+1,friedman_MLP,FFT,rango_medio,1.1666666666666667
+1,friedman_MLP,STFT spectrogram,rango_medio,2.5
+1,friedman_MLP,Wavelet db4,rango_medio,3.0
+1,friedman_MLP,Statistical,rango_medio,3.3333333333333335
+1,anova_bloqueada_RxC,,F,2.7565786980012317
+1,anova_bloqueada_RxC,,gl,6.0
+1,anova_bloqueada_RxC,,p,0.020502660157276944
+1,caida,Statistical,caida,0.207143398964181
+1,caida,FFT,caida,0.11212573721362817
+1,caida,Wavelet db4,caida,0.11515555325320037
+1,caida,STFT spectrogram,caida,0.08252076249921336
+2,friedman_principal,,N,6.0
+2,friedman_principal,,chi2,4.0
+2,friedman_principal,,p,0.26146412994911117
+2,friedman_principal,,W_kendall,0.2222222222222222
+2,friedman_principal,STFT spectrogram,rango_medio,1.8333333333333333
+2,friedman_principal,FFT,rango_medio,2.1666666666666665
+2,friedman_principal,Wavelet db4,rango_medio,2.8333333333333335
+2,friedman_principal,Statistical,rango_medio,3.1666666666666665
+2,friedman_SVM-RBF,,chi2,9.400000000000006
+2,friedman_SVM-RBF,,p,0.024419337395717236
+2,friedman_SVM-RBF,,p_bonferroni_x3,0.07325801218715171
+2,friedman_SVM-RBF,,W_kendall,0.5222222222222226
+2,friedman_SVM-RBF,STFT spectrogram,rango_medio,1.1666666666666667
+2,friedman_SVM-RBF,Wavelet db4,rango_medio,2.6666666666666665
+2,friedman_SVM-RBF,Statistical,rango_medio,2.8333333333333335
+2,friedman_SVM-RBF,FFT,rango_medio,3.3333333333333335
+2,friedman_RandomForest,,chi2,7.800000000000011
+2,friedman_RandomForest,,p,0.05033109785985302
+2,friedman_RandomForest,,p_bonferroni_x3,0.15099329357955907
+2,friedman_RandomForest,,W_kendall,0.43333333333333396
+2,friedman_RandomForest,FFT,rango_medio,1.3333333333333333
+2,friedman_RandomForest,Wavelet db4,rango_medio,2.5
+2,friedman_RandomForest,STFT spectrogram,rango_medio,2.8333333333333335
+2,friedman_RandomForest,Statistical,rango_medio,3.3333333333333335
+2,friedman_MLP,,chi2,12.200000000000003
+2,friedman_MLP,,p,0.006728522930461357
+2,friedman_MLP,,p_bonferroni_x3,0.02018556879138407
+2,friedman_MLP,,W_kendall,0.6777777777777779
+2,friedman_MLP,FFT,rango_medio,1.0
+2,friedman_MLP,STFT spectrogram,rango_medio,2.5
+2,friedman_MLP,Wavelet db4,rango_medio,3.1666666666666665
+2,friedman_MLP,Statistical,rango_medio,3.3333333333333335
+2,anova_bloqueada_RxC,,F,2.8315451097326143
+2,anova_bloqueada_RxC,,gl,6.0
+2,anova_bloqueada_RxC,,p,0.01787328376172189
+2,caida,Statistical,caida,0.2027328003394694
+2,caida,FFT,caida,0.11313593337613703
+2,caida,Wavelet db4,caida,0.1319938851319049
+2,caida,STFT spectrogram,caida,0.09564405920712316
+3,friedman_principal,,N,6.0
+3,friedman_principal,,chi2,4.200000000000003
+3,friedman_principal,,p,0.24066188520961498
+3,friedman_principal,,W_kendall,0.2333333333333335
+3,friedman_principal,STFT spectrogram,rango_medio,1.6666666666666667
+3,friedman_principal,Wavelet db4,rango_medio,2.5
+3,friedman_principal,FFT,rango_medio,2.6666666666666665
+3,friedman_principal,Statistical,rango_medio,3.1666666666666665
+3,friedman_SVM-RBF,,chi2,9.800000000000011
+3,friedman_SVM-RBF,,p,0.020344998515208296
+3,friedman_SVM-RBF,,p_bonferroni_x3,0.06103499554562489
+3,friedman_SVM-RBF,,W_kendall,0.5444444444444451
+3,friedman_SVM-RBF,STFT spectrogram,rango_medio,1.3333333333333333
+3,friedman_SVM-RBF,Wavelet db4,rango_medio,2.1666666666666665
+3,friedman_SVM-RBF,Statistical,rango_medio,3.0
+3,friedman_SVM-RBF,FFT,rango_medio,3.5
+3,friedman_RandomForest,,chi2,5.400000000000006
+3,friedman_RandomForest,,p,0.14474357941485547
+3,friedman_RandomForest,,p_bonferroni_x3,0.43423073824456637
+3,friedman_RandomForest,,W_kendall,0.3000000000000003
+3,friedman_RandomForest,FFT,rango_medio,1.5
+3,friedman_RandomForest,Wavelet db4,rango_medio,2.6666666666666665
+3,friedman_RandomForest,STFT spectrogram,rango_medio,2.6666666666666665
+3,friedman_RandomForest,Statistical,rango_medio,3.1666666666666665
+3,friedman_MLP,,chi2,10.400000000000006
+3,friedman_MLP,,p,0.015454827216857713
+3,friedman_MLP,,p_bonferroni_x3,0.046364481650573136
+3,friedman_MLP,,W_kendall,0.5777777777777781
+3,friedman_MLP,FFT,rango_medio,1.1666666666666667
+3,friedman_MLP,STFT spectrogram,rango_medio,2.5
+3,friedman_MLP,Wavelet db4,rango_medio,2.8333333333333335
+3,friedman_MLP,Statistical,rango_medio,3.5
+3,anova_bloqueada_RxC,,F,2.715097389861814
+3,anova_bloqueada_RxC,,gl,6.0
+3,anova_bloqueada_RxC,,p,0.022120554430666548
+3,caida,Statistical,caida,0.17973934063177033
+3,caida,FFT,caida,0.09911736163137563
+3,caida,Wavelet db4,caida,0.06652778928049918
+3,caida,STFT spectrogram,caida,0.06586196444188397
+0,criterio,friedman_principal,cambia_primero_o_ultimo,1.0
+1,criterio,friedman_principal,cambia_primero_o_ultimo,1.0
+2,criterio,friedman_principal,cambia_primero_o_ultimo,1.0
+3,criterio,friedman_principal,cambia_primero_o_ultimo,1.0
+0,criterio,friedman_SVM-RBF,cambia_primero_o_ultimo,1.0
+1,criterio,friedman_SVM-RBF,cambia_primero_o_ultimo,0.0
+2,criterio,friedman_SVM-RBF,cambia_primero_o_ultimo,0.0
+3,criterio,friedman_SVM-RBF,cambia_primero_o_ultimo,0.0
+0,criterio,friedman_RandomForest,cambia_primero_o_ultimo,1.0
+1,criterio,friedman_RandomForest,cambia_primero_o_ultimo,0.0
+2,criterio,friedman_RandomForest,cambia_primero_o_ultimo,0.0
+3,criterio,friedman_RandomForest,cambia_primero_o_ultimo,0.0
+0,criterio,friedman_MLP,cambia_primero_o_ultimo,0.0
+1,criterio,friedman_MLP,cambia_primero_o_ultimo,1.0
+2,criterio,friedman_MLP,cambia_primero_o_ultimo,1.0
+3,criterio,friedman_MLP,cambia_primero_o_ultimo,1.0
+0,criterio,Statistical - FFT,cambia_signo_diferencia_caidas,1.0
+0,criterio,Statistical - Wavelet db4,cambia_signo_diferencia_caidas,1.0
+0,criterio,Statistical - STFT spectrogram,cambia_signo_diferencia_caidas,1.0
+0,criterio,FFT - Wavelet db4,cambia_signo_diferencia_caidas,0.0
+0,criterio,FFT - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+0,criterio,Wavelet db4 - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+1,criterio,Statistical - FFT,cambia_signo_diferencia_caidas,0.0
+1,criterio,Statistical - Wavelet db4,cambia_signo_diferencia_caidas,0.0
+1,criterio,Statistical - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+1,criterio,FFT - Wavelet db4,cambia_signo_diferencia_caidas,0.0
+1,criterio,FFT - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+1,criterio,Wavelet db4 - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+2,criterio,Statistical - FFT,cambia_signo_diferencia_caidas,0.0
+2,criterio,Statistical - Wavelet db4,cambia_signo_diferencia_caidas,0.0
+2,criterio,Statistical - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+2,criterio,FFT - Wavelet db4,cambia_signo_diferencia_caidas,0.0
+2,criterio,FFT - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+2,criterio,Wavelet db4 - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+3,criterio,Statistical - FFT,cambia_signo_diferencia_caidas,0.0
+3,criterio,Statistical - Wavelet db4,cambia_signo_diferencia_caidas,0.0
+3,criterio,Statistical - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+3,criterio,FFT - Wavelet db4,cambia_signo_diferencia_caidas,1.0
+3,criterio,FFT - STFT spectrogram,cambia_signo_diferencia_caidas,0.0
+3,criterio,Wavelet db4 - STFT spectrogram,cambia_signo_diferencia_caidas,0.0

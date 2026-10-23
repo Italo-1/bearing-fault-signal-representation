@@ -26,9 +26,12 @@ PROYECTO = "bearing-fault-signal-representation"
 # Orden real de ejecucion. Algunos scripts producen tablas que lee un script de
 # numero menor, por eso la lista es explicita y no se ordena por nombre.
 PASOS = [
+    # 01 va primero: los dos 00 leen data/raw/catalogo.csv, que escribe 01.
+    # (Corregido el 21/10/2026: en un clon limpio el orden anterior fallaba en
+    # el primer paso; detectado al reproducir desde cero.)
+    ["01_download.py"],
     ["00_verificar_estructura.py"],
     ["00_verificar_etiquetas.py"],
-    ["01_download.py"],
     ["02_preprocess.py"],
     ["03_experiment.py", "--parte", "clasicos"],
     ["03_experiment.py", "--parte", "cnn"],
@@ -37,6 +40,13 @@ PASOS = [
     ["05_figures.py"],
     ["06_revision.py"],
     ["07_revision2.py"],
+    # Revision editorial (octubre de 2026). 08 sin ajustes nuevos; 09 comprueba
+    # que reproduce 03 con los valores por defecto y despues hace el ajuste
+    # anidado (horas de CPU); 08 --ajustado analiza su salida.
+    ["08_revision_editorial.py"],
+    ["09_ajuste_anidado.py", "--por-defecto"],
+    ["09_ajuste_anidado.py"],
+    ["08_revision_editorial.py", "--ajustado"],
 ]
 
 

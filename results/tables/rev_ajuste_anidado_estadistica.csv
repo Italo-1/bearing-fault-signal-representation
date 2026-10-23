@@ -1,0 +1,51 @@
+fuente,analisis,nivel,estadistico,valor
+ajuste_anidado,friedman_principal,,N,12.0
+ajuste_anidado,friedman_principal,,chi2,9.300000000000011
+ajuste_anidado,friedman_principal,,p,0.02555702810722494
+ajuste_anidado,friedman_principal,,W_kendall,0.25833333333333364
+ajuste_anidado,friedman_principal,FFT,rango_medio,1.9166666666666667
+ajuste_anidado,friedman_principal,STFT spectrogram,rango_medio,2.1666666666666665
+ajuste_anidado,friedman_principal,Statistical,rango_medio,2.5
+ajuste_anidado,friedman_principal,Wavelet db4,rango_medio,3.4166666666666665
+ajuste_anidado,friedman_SVM-RBF,,chi2,17.30000000000001
+ajuste_anidado,friedman_SVM-RBF,,p,0.000613105622524849
+ajuste_anidado,friedman_SVM-RBF,,p_bonferroni_x3,0.001839316867574547
+ajuste_anidado,friedman_SVM-RBF,,W_kendall,0.48055555555555585
+ajuste_anidado,friedman_SVM-RBF,STFT spectrogram,rango_medio,1.4166666666666667
+ajuste_anidado,friedman_SVM-RBF,Statistical,rango_medio,2.3333333333333335
+ajuste_anidado,friedman_SVM-RBF,FFT,rango_medio,2.6666666666666665
+ajuste_anidado,friedman_SVM-RBF,Wavelet db4,rango_medio,3.5833333333333335
+ajuste_anidado,friedman_RandomForest,,chi2,14.0
+ajuste_anidado,friedman_RandomForest,,p,0.002905152774267437
+ajuste_anidado,friedman_RandomForest,,p_bonferroni_x3,0.008715458322802312
+ajuste_anidado,friedman_RandomForest,,W_kendall,0.3888888888888889
+ajuste_anidado,friedman_RandomForest,FFT,rango_medio,1.3333333333333333
+ajuste_anidado,friedman_RandomForest,Wavelet db4,rango_medio,2.6666666666666665
+ajuste_anidado,friedman_RandomForest,STFT spectrogram,rango_medio,2.8333333333333335
+ajuste_anidado,friedman_RandomForest,Statistical,rango_medio,3.1666666666666665
+ajuste_anidado,friedman_MLP,,chi2,20.200000000000017
+ajuste_anidado,friedman_MLP,,p,0.00015428843096021273
+ajuste_anidado,friedman_MLP,,p_bonferroni_x3,0.00046286529288063817
+ajuste_anidado,friedman_MLP,,W_kendall,0.5611111111111116
+ajuste_anidado,friedman_MLP,FFT,rango_medio,1.0833333333333333
+ajuste_anidado,friedman_MLP,STFT spectrogram,rango_medio,2.75
+ajuste_anidado,friedman_MLP,Statistical,rango_medio,2.9166666666666665
+ajuste_anidado,friedman_MLP,Wavelet db4,rango_medio,3.25
+ajuste_anidado,anova_bloqueada_RxC,,F,4.658600442664728
+ajuste_anidado,anova_bloqueada_RxC,,gl,6.0
+ajuste_anidado,anova_bloqueada_RxC,,p,0.0002695423230450349
+ajuste_anidado,caida,Statistical,caida,0.15703994314652336
+ajuste_anidado,caida,FFT,caida,0.07977983206130823
+ajuste_anidado,caida,Wavelet db4,caida,0.1745075541853608
+ajuste_anidado,caida,STFT spectrogram,caida,0.07683047386288044
+ajuste_anidado,modelo_mixto_B_RxC,paso 1: sin clf x carga,LR,14.795628379600885
+ajuste_anidado,modelo_mixto_B_RxC,paso 1: sin clf x carga,p_bootstrap,0.04730617608409987
+ajuste_anidado,modelo_mixto_B_RxC,paso 1: sin clf x carga,B,999.0
+ajuste_anidado,modelo_mixto_B_RxC,paso 1: sin clf x carga,replicas_validas,760.0
+ajuste_anidado,modelo_mixto_B_componentes,carga_test,varianza_reml,0.0028669201794991168
+ajuste_anidado,modelo_mixto_B_componentes,carga_train,varianza_reml,0.0026278434795300046
+ajuste_anidado,modelo_mixto_B_componentes,rc:carga_test,varianza_reml,0.0034052234826213905
+ajuste_anidado,modelo_mixto_B_componentes,rc:carga_train,varianza_reml,0.0018710239939356236
+ajuste_anidado,modelo_mixto_B_componentes,repr:carga_test,varianza_reml,0.005498318003340155
+ajuste_anidado,modelo_mixto_B_componentes,repr:carga_train,varianza_reml,0.0007150645608344987
+ajuste_anidado,modelo_mixto_B_componentes,residuo,varianza_reml,0.0020690925318520483

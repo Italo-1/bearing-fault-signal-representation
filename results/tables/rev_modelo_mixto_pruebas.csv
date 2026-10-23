@@ -1,0 +1,3 @@
+modelo,simplificacion,termino,nula,convergencia,frontera,LR,gl_nominales,p_bootstrap,B,replicas_validas,p_fiable,llf_nula,llf_alternativa
+A,completo,C(representacion),1,si,False,2.2904509622430282,3,0.6143057503506312,999,712,False,-156.61128310726852,-155.466057626147
+B,paso 1: sin clf x carga,C(representacion) * C(clasificador),C(representacion) + C(clasificador),si,False,21.741356087152553,6,0.0053475935828877,999,747,False,-483.98196808624726,-473.111290042671

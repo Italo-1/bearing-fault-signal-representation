@@ -1,0 +1,13 @@
+modelo,simplificacion,componente,varianza_reml
+A,completo,carga_test,0.001480481939373149
+A,completo,carga_train,0.0017676059244610097
+A,completo,repr:carga_test,0.006680015410160939
+A,completo,repr:carga_train,0.0019387779129687957
+A,completo,residuo,0.0006341542792036059
+B,paso 1: sin clf x carga,carga_test,0.0014784545860554285
+B,paso 1: sin clf x carga,carga_train,0.0017726278607951844
+B,paso 1: sin clf x carga,rc:carga_test,0.0033991213516502833
+B,paso 1: sin clf x carga,rc:carga_train,0.0002731333691083388
+B,paso 1: sin clf x carga,repr:carga_test,0.005685198121701204
+B,paso 1: sin clf x carga,repr:carga_train,0.0019437944836094045
+B,paso 1: sin clf x carga,residuo,0.0012874493160167067

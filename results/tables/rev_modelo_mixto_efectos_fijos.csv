@@ -1,0 +1,17 @@
+modelo,simplificacion,termino,estimacion_reml,error_estandar
+A,completo,Intercept,0.918567671895802,0.054950582223253844
+A,completo,C(representacion)[T.estadisticos],-0.08375743689032575,0.06644613639205914
+A,completo,C(representacion)[T.fft],-0.01839052626319515,0.06644613639205904
+A,completo,C(representacion)[T.wavelet],-0.06124944353525042,0.06644613639205907
+B,paso 1: sin clf x carga,Intercept,0.9158746019873542,0.0611994271724117
+B,paso 1: sin clf x carga,C(representacion)[T.estadisticos],-0.11679166113920075,0.07658458427802145
+B,paso 1: sin clf x carga,C(representacion)[T.fft],0.055012659162991244,0.07658458427802141
+B,paso 1: sin clf x carga,C(representacion)[T.wavelet],-0.085921445468115,0.07658458427802133
+B,paso 1: sin clf x carga,C(clasificador)[T.RandomForest],-0.01789986250691348,0.045284680040628425
+B,paso 1: sin clf x carga,C(clasificador)[T.SVM-RBF],0.025979072232179445,0.04528468004062848
+B,paso 1: sin clf x carga,C(representacion)[T.estadisticos]:C(clasificador)[T.RandomForest],0.08783730224179827,0.06404220868118296
+B,paso 1: sin clf x carga,C(representacion)[T.fft]:C(clasificador)[T.RandomForest],0.0030820900760992515,0.06404220868118295
+B,paso 1: sin clf x carga,C(representacion)[T.wavelet]:C(clasificador)[T.RandomForest],0.08022374544380512,0.06404220868118299
+B,paso 1: sin clf x carga,C(representacion)[T.estadisticos]:C(clasificador)[T.SVM-RBF],0.01126537050487796,0.06404220868118302
+B,paso 1: sin clf x carga,C(representacion)[T.fft]:C(clasificador)[T.SVM-RBF],-0.2232916463546579,0.06404220868118299
+B,paso 1: sin clf x carga,C(representacion)[T.wavelet]:C(clasificador)[T.SVM-RBF],-0.006207739645155833,0.06404220868118299

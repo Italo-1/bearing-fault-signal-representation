@@ -25,8 +25,10 @@ Para que el espectrograma entre en el nucleo se usa su version vectorizada en
 rejilla 16x64, es decir 1 024 dimensiones. La rejilla no es cuadrada a
 proposito: conserva el eje del tiempo -2.67 ms por columna, entre 2.3 y 3.5
 columnas por impacto- y reduce solo el de frecuencia. Una rejilla cuadrada de
-dimension parecida dejaria 10.67 ms por columna y borraria el tren de impactos,
-que es la firma que `nperseg = 64` existe para resolver.
+la misma dimension (32x32) dejaria 5.33 ms por columna, menos de dos columnas
+por periodo BPFI, y borraria el tren de impactos, que es la firma que
+`nperseg = 64` existe para resolver. (Corregido el 20/10/2026: decia 10.67 ms,
+que corresponde a 16 columnas; ver 02_preprocess.py.)
 
 Particion
 ---------
@@ -72,10 +74,13 @@ CARGAS = [0, 1, 2, 3]
 CLASES = ["Normal", "IR", "B", "OR"]
 N_FOLDS = 5
 
-# Hiperparametros fijos, declarados y no ajustados. Ajustarlos exigiria un
-# conjunto de validacion, y sacarlo del entrenamiento cambiaria el tamano de
-# muestra entre celdas; sacarlo de la prueba seria fuga. Se usan valores
-# convencionales identicos en las 16 celdas.
+# Hiperparametros fijos, declarados y no ajustados: son el diseno del
+# protocolo, con valores convencionales identicos en las 16 celdas. El ajuste
+# es posible sin fuga, con validacion interna sobre los bloques de
+# entrenamiento, y se hizo en la revision editorial (09_ajuste_anidado.py), cuyos
+# resultados se reportan junto a estos, no en su lugar. (Corregido el 20/10/2026:
+# el argumento anterior, que sacar la validacion del entrenamiento cambiaria el
+# tamano de muestra entre celdas, ya se declaro invalido en la ronda 1.)
 ARBOLES = 300
 CAPAS_MLP = (128, 64)
 ITERACIONES_MLP = 500
@@ -102,8 +107,10 @@ indices_celda = PREPROCESS.indices_celda
 def construir_clasificador(nombre: str):
     """Pipeline listo para ajustar. El escalador se ajusta solo con el train.
 
-    MLPClassifier no acepta `class_weight` ni `sample_weight`, asi que es el
-    unico de los tres que no compensa el desbalance de la clase Normal. Se
+    MLPClassifier no tiene `class_weight`, asi que es el unico de los tres que
+    no compensa el desbalance de la clase Normal. (Corregido el 22/10/2026: decia
+    que tampoco acepta `sample_weight`, pero su `fit` si lo admite en
+    scikit-learn 1.9, la version usada; el protocolo lo entrena sin ponderar.) Se
     declara en el manuscrito; la metrica primaria es F1-macro, que ya trata las
     cuatro clases por igual.
     """

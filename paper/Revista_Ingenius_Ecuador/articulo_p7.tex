@@ -111,47 +111,42 @@ rodamientos}
 \begin{tabular}{p{8cm}p{8cm}}
 {\Large \bfseries Abstract} &{\Large \bfseries Resumen} \\ \\
 Comparisons of signal representations for bearing fault diagnosis are usually
-reported under a single operating condition, where accuracy saturates and the
-comparison carries little information. This work measures how four
-representations behave when the test load differs from the training load.
-Time-domain statistics, FFT magnitude, db4 wavelet band energies and STFT
-spectrogram were combined with three vector classifiers over the sixteen
-(training load, test load) pairs of the CWRU drive-end dataset at 12 kHz, with
-five folds per cell and a fixed seed. The split was performed by source record
-and by purged contiguous blocks, so that no two windows sharing samples fall on
-opposite sides. Within a single load, where the split shares records,
-all four exceeded 0.95 macro-F1, so the
-usual comparison does not discriminate between them. Across loads the mean drop
-ranged from 0.074 for the spectrogram to 0.153 for time-domain statistics, with
-overlapping bootstrap intervals. The
-omnibus Friedman test over the twelve off-diagonal pairs did not reject, while
-the three per-classifier tests each did and disagreed on the ranking. An
-exploratory three-way ANOVA on the cell means places the representation by
-classifier interaction above every main effect. An amplitude-normalisation
-ablation did not improve transfer and degraded it with Random Forest. Representation choice interacts with the classifier rather
-than defining a general ordering.
+reported under a single operating condition, where accuracy saturates. This
+work measures how four representations behave when the test load differs from
+the training load. Time-domain statistics, FFT magnitude, db4 wavelet band
+energies and STFT spectrogram were combined with three vector classifiers over
+the sixteen (training load, test load) pairs of the CWRU drive-end dataset at
+12 kHz, with the split made by source record and purged contiguous blocks.
+Within a single load, where the split shares records, all four exceeded 0.95 macro-F1 on average. Across loads the mean drop ranged from 0.074 for the spectrogram to
+0.153 for time-domain statistics, and the latter depended on transfers involving 0 HP. With default hyperparameters the
+omnibus Friedman test did not reject, which does not show that the
+representations are equivalent, while the three per-classifier tests each
+rejected and disagreed on the ranking. The representation by classifier
+interaction persisted when each load was left out and under nested tuning on
+training data, which also made the omnibus test reject, so rankings depend on
+the configuration. With four loads and one bearing per fault condition these
+inferences are indicative and specific to this dataset. Per-window RMS normalisation gave no clear improvement in the four combinations
+tested and degraded transfer with Random Forest.
 &
 Las comparaciones entre representaciones de señal para el diagnóstico de fallas
 en rodamientos suelen reportarse bajo una sola condición de operación, donde la
-exactitud satura y aporta poca información. Este trabajo mide el
-comportamiento de cuatro representaciones cuando la carga de prueba difiere de
-la de entrenamiento. Se combinaron estadísticos temporales, magnitud FFT,
-energías de banda wavelet db4 y espectrograma STFT con tres clasificadores de
-vector sobre los dieciséis pares (carga de entrenamiento, carga de prueba) del
-conjunto CWRU a 12 kHz, con cinco pliegues por celda y semilla fija. La división
-se hizo por registro de origen y por bloques contiguos purgados, evitando fuga
-por solape. Dentro de una misma carga, donde la partición comparte
-registros, las cuatro superaron 0,95 de F1-macro,
-de modo que la comparación habitual no discrimina. Entre cargas la caída media
-osciló entre 0,074 para el espectrograma y 0,153 para los estadísticos, con
-intervalos de confianza solapados. La prueba de Friedman ómnibus sobre los doce
-pares fuera de la diagonal no rechazó, mientras que las tres pruebas por
-clasificador rechazaron y discreparon en el orden. Un ANOVA exploratorio sitúa
-la interacción representación-clasificador por encima de todo efecto
-principal. Una
-ablación de normalización de amplitud no mejoró la
-transferencia y la degradó con Random Forest. La elección de representación
-interactúa con el clasificador en lugar de definir un orden general.
+exactitud satura. Este trabajo mide cómo se comportan cuatro
+representaciones cuando la carga de prueba difiere de la de entrenamiento. Se
+combinaron estadísticos temporales, magnitud FFT, energías de banda wavelet db4
+y espectrograma STFT con tres clasificadores de vector sobre los dieciséis pares de cargas del conjunto CWRU a 12 kHz, con
+división por registro y por bloques contiguos purgados. Dentro de una
+misma carga, donde la partición comparte registros, las cuatro superaron en promedio 0,95 de
+F1-macro. Entre cargas la caída media osciló entre 0,074 para el
+espectrograma y 0,153 para los estadísticos, y esta
+última dependió de las transferencias con 0 HP. Con hiperparámetros por
+defecto la prueba de Friedman ómnibus no rechazó, lo que no demuestra su
+equivalencia, y las tres pruebas por clasificador
+rechazaron y discreparon en el orden. La interacción representación-clasificador
+persistió al excluir cada carga y con un ajuste anidado sobre datos de
+entrenamiento, que hizo rechazar la prueba ómnibus, por lo que el orden
+depende de la configuración. Con cuatro cargas y un rodamiento por condición de
+falla, estas inferencias son indicativas y propias de este conjunto. La normalización RMS no mejoró claramente ninguna de las cuatro
+combinaciones probadas y degradó la transferencia con Random Forest.
 \\[-0.3cm]
 \keywords{bearing fault diagnosis, data leakage, domain shift, Friedman test,
 signal representation, vibration analysis}
@@ -177,53 +172,41 @@ señal}
 \section{Introduction}
 
 Rolling element bearings fail in ways that leave a signature in the vibration
-measured on the housing. A localised defect produces an impact each time a
-rolling element passes over it, and those impacts excite the structural
-resonance of the assembly at a repetition rate set by the geometry and the shaft
-speed, which is the basis of envelope analysis and of the diagnostic techniques
-reviewed in \cite{randall2011}.
+measured on the housing: a localised defect produces an impact each time a
+rolling element passes over it, exciting the structural resonance at a rate set
+by the geometry and the shaft speed, which is the basis of envelope analysis
+\cite{randall2011}.
 
-Data-driven diagnosis adds a decision on top of that physics: the signal is
-converted into some representation and a classifier is trained on it. The choice
-of representation is normally justified by comparing several candidates on the
-same data and recommending the most accurate. The Case Western Reserve
-University (CWRU) Bearing Data Center dataset \cite{cwru} is the standard
-reference for those experiments, with a benchmark study devoted to categorising
-it \cite{smith2015} and later work refining that practice \cite{hendriks2022}.
+Data-driven diagnosis converts the signal into a representation and trains a
+classifier on it, and the representation is normally chosen by comparing
+candidates on the same data. The Case Western Reserve University (CWRU) Bearing
+Data Center dataset \cite{cwru} is the standard reference for those experiments,
+with a benchmark study devoted to it \cite{smith2015} and later work refining
+that practice \cite{hendriks2022}.
 
-Accuracy within a single
-operating condition saturates near unity, so the ranking it produces separates
-methods by hundredths of a point and does not survive a change of dataset, and
-the way the data are partitioned decides the result: bearing vibration is
-usually cut into overlapping windows, and if those windows are shuffled before
-splitting, windows sharing samples end up on both sides and the classifier
-recognises the recording rather than the fault. A survey across seventeen
-scientific fields found leakage of this kind in 294 papers, in some cases
-producing conclusions far more optimistic than the data supported
-\cite{kapoor2023}.
+Accuracy within a single operating condition saturates near unity, and the way
+the data are partitioned decides the result: bearing vibration is usually cut
+into overlapping windows, and if those are shuffled before splitting, windows
+sharing samples fall on both sides and the classifier recognises the recording
+rather than the fault. Data leakage was found in 294 papers across
+seventeen scientific fields, in some cases producing conclusions far more
+optimistic than the data supported \cite{kapoor2023}.
 
-The shift between operating conditions is itself an active subject. A review of
-deep-learning work on the CWRU dataset records how widely it serves as a
-validation reference \cite{neupane2020}, and a benchmark of four architectures
-over nine datasets reports generalisation as an open problem of the field
-\cite{zhao2020}. The usual response is a domain-adaptation model that aligns the
-distributions of a labelled source condition and an unlabelled target condition,
-for instance by minimising a multi-kernel maximum mean discrepancy across
-several layers \cite{li2019}. That line fixes a representation and modifies the
+The shift between operating conditions is itself an active subject. The CWRU
+dataset is a common validation reference \cite{neupane2020}, generalisation
+remains an open problem across nine datasets \cite{zhao2020}, and the usual
+response is a domain-adaptation model aligning a labelled source condition and
+an unlabelled target condition, for instance with a multi-kernel maximum mean
+discrepancy \cite{li2019}. That line fixes a representation and modifies the
 model, leaving open what the representation itself contributes to the transfer,
 which is the question addressed here.
 
 Fault diagnosis in rotating machinery has been addressed repeatedly in this
-journal, from measurement rather than from model design. Time-domain descriptors
-such as RMS, energy and entropy have been fed to a feed-forward network to
-diagnose mechanical faults in spark-ignition engines \cite{contreras2019}, while
-temperature and injection pressure have served as measured indicators instead of
-a signal representation, with a multifactorial ANOVA establishing which factors
-matter \cite{llanes2019}. Earlier, two measurement methods for stator lamination
-faults were compared on rotating machines without a learned model
-\cite{salazar2012}. A four-level Daubechies db4 decomposition has been applied
-in the journal to estimate fault distance \cite{gomez2023}; the wavelet
-representation below uses the same family with five levels.
+journal from measurement rather than model design: time-domain descriptors fed a feed-forward network to diagnose spark-ignition
+engines \cite{contreras2019}; temperature and injection pressure served as measured indicators analysed by multifactorial ANOVA \cite{llanes2019}; two measurement methods for stator lamination faults
+were compared without a learned model \cite{salazar2012}; and a four-level
+Daubechies db4 decomposition was used to estimate fault distance
+\cite{gomez2023}, the family used below with five levels.
 
 This study measures how four representations behave when the test load differs
 from the training load. The contributions of this work are: (1) a
@@ -231,11 +214,12 @@ record-level evaluation protocol for the CWRU dataset in which the split is
 performed by source record and, within a record, by purged contiguous blocks,
 verified by a leakage check with a negative control; (2) a 4$\times$4 matrix of
 macro-F1 by (training load, test load) pair for four representations and three
-classifiers, reported per fold; (3) evidence that no representation holds a
-consistent advantage across classifiers, the representation by classifier
-interaction being the largest term of the factorial model; and (4) an ablation,
-specified before the experiment was run, showing that removing
-amplitude information does not improve cross-load transfer.
+classifiers, reported per fold; (3) evidence, specific to this dataset and to
+the configurations evaluated, that the ranking of representations depends on the
+classifier, with a representation by classifier interaction that persists when
+any load is left out and under nested tuning; and (4) an ablation, specified
+before the experiment was run, in which per-window RMS division did not clearly improve
+cross-load transfer with the two classifiers and representations tested.
 
 \section{Materials and Methods}
 
@@ -247,30 +231,20 @@ loads (0, 1, 2 and 3 HP, nominally 1797, 1772, 1750 and 1730 rpm). The classes
 are healthy bearing (Normal), inner race fault (IR), ball fault (B) and outer
 race fault (OR), the last three at diameters of 0.007, 0.014 and 0.021 inches.
 
-The file naming convention is a known source of error. One file,
-\texttt{99.mat} (Normal, 2 HP), holds both \texttt{X098\_DE\_time}, a duplicate of
-the 1 HP file, and \texttt{X099\_DE\_time}. Taking the first key ending in
-\texttt{\_DE\_time} returns the duplicate and labels the 1 HP signal as 2 HP,
-displacing a column of the results matrix with no visible symptom. The channel
-is therefore matched exactly against the file number
-(\texttt{X\{NNN\}\_DE\_time}), and the script fails rather than falling back to
-position.
+The file naming convention is a known source of error: \texttt{99.mat} (Normal,
+2 HP) also holds a duplicate of the 1 HP signal, so the channel is matched
+exactly against the file number (\texttt{X\{NNN\}\_DE\_time}).
 
-Labels were verified against the physics of the bearing rather than third-party
-tables. For the SKF 6205-2RS JEM drive-end bearing the characteristic order
-factors are BPFO 3.5848, BPFI 5.4152, BSF 2.3568 and FTF 0.3983 times the shaft
-frequency; the rolling-element value of 4.7135 tabulated by CWRU corresponds to
-$2\times$BSF, not to BSF. Envelope analysis (band-pass filtering in the
-2--5.5 kHz resonance, Hilbert transform, spectrum) confirmed the inner race
-labels in 12 of 12 records and the outer race labels in 9 of 12, the expected
-order dominating by a factor of three and five. In the healthy records no
-characteristic frequency stood out, an order of magnitude below the fault
-records. Ball faults required the sideband criterion at $2\times$BSF modulated
-by FTF, a defective ball striking both races and crossing the load zone at the
-cage rate; under it 11 of 12 records exceeded twice the largest peak of the
-healthy records, the weakest signatures being those at 0.021 in. All 40 records were kept, since discarding those with a
-weak signature would bias the result upwards, and fault diameter is a covariate
-for subgroup reporting.
+Labels were verified against the physics of the SKF 6205 drive-end bearing
+rather than third-party tables, by envelope analysis of the 2--5.5 kHz
+resonance at its characteristic orders; the rolling-element value of 4.7135
+tabulated by CWRU corresponds to $2\times$BSF, not to BSF. The inner race labels
+were confirmed in 12 of 12 records, the outer race labels in 9 of 12 and the
+ball labels, by the $2\times$BSF sideband criterion, in 11 of 12, with weak
+signatures in the outer race records at 0.014 in and the ball records at
+0.021 in; the details are in the supplementary material. All 40 records were
+kept, since discarding those with a weak signature would bias the result
+upwards, and fault diameter is a covariate for subgroup reporting.
 
 \subsection{Windowing and the partition rule}
 
@@ -289,11 +263,9 @@ $m+2$ share no samples, so one discarded window per boundary suffices, removing
 uses the blocks other than $k$ from every record of load $i$, and testing block
 $k$ from every record of load $j$.
 
-Off the diagonal the rule leaves record-level separation intact and the blocks
-only produce five disjoint test sets. On the diagonal, overlap is removed but
+On the diagonal, overlap is removed but
 training and test windows still come from the same record, so the diagonal is a
-reference and is excluded from every test. The training set is four fifths of
-one load in all sixteen cells, so no sample-size confound separates the two.
+reference and is excluded from every test.
 
 All 80 cell-fold combinations were checked for training windows sharing samples
 with a test window of the same record, and none was found. The same check
@@ -326,10 +298,7 @@ Four representations were computed from the same windows. Figure
 \ref{fig:senales} shows one raw window per class and Figure \ref{fig:repr} shows
 the same inner-race window under the four representations.
 
-\textbf{Time-domain statistics.} The twelve classical vibration descriptors:
-mean, RMS, standard deviation, skewness, kurtosis, peak, peak-to-peak, crest
-factor, shape factor, impulse factor, clearance factor and mean square root
-amplitude.
+\textbf{Time-domain statistics.} Twelve classical vibration descriptors, from mean, RMS and kurtosis to the crest, shape, impulse and clearance factors.
 
 \textbf{FFT magnitude.} The real FFT magnitude up to Nyquist, 1025 bins of
 5.86 Hz.
@@ -339,19 +308,14 @@ wavelet, the family used in \cite{gomez2023}, as the relative energy of each
 band (six values: the approximation A5 and the details D5 to D1).
 
 \textbf{STFT spectrogram.} The spectrogram in dB, normalised per image to
-$[0,1]$, with the transform window set explicitly to $\mathit{nperseg} = 64$:
-187.5 Hz per band, 63 frames and a hop of 2.67 ms. BPFO and BPFI are not
-spectral peaks: the fault excites the 2--5.5 kHz structural resonance and the
-characteristic frequency appears as the repetition rate of the impacts, along
-the time axis. At 1797 rpm the impacts occur every 9.3 ms (BPFO) and 6.2 ms
-(BPFI), so a hop of 2.67 ms places 2.3 to 3.5 frames within each impact period,
-while a 512-sample window would give 23.4 Hz per band but a hop of 21.3 ms,
-erasing the impact train. For the same reason the spectrogram enters the
-comparison as a $16\times64$ grid of 1024 values rather than a square
-$32\times32$ one, which would leave 5.33 ms per column, fewer than two columns
-per BPFI impact period; the $16\times64$ grid keeps the 2.67 ms hop and halves
-the frequency axis to 375 Hz. A $64\times64$ image of the same transform feeds the
-convolutional network.
+$[0,1]$, with $\mathit{nperseg} = 64$: 187.5 Hz per band, 63 frames and a hop of
+2.67 ms. A fault excites the 2--5.5 kHz structural resonance, and its
+characteristic frequency appears as the repetition rate of the impacts, every
+9.3 ms (BPFO) and 6.2 ms (BPFI) at 1797 rpm, so the hop places 2.3 to 3.5
+frames within each impact period. The comparison uses a $16\times64$ grid of
+1024 values, which keeps the hop and halves the frequency axis to 375 Hz; a
+square $32\times32$ grid would leave fewer than two columns per BPFI period. A
+$64\times64$ image of the same transform feeds the convolutional network.
 
 Table \ref{tab:repr} summarises the four. The scaler is fitted inside the
 pipeline, on the training fold only.
@@ -375,15 +339,12 @@ STFT spectrogram ($64\times64$) & 4096 & 187.5 Hz / 2.67 ms & yes & no  \\
 \end{tabular}}
 \end{table}
 
-Two of the four discard amplitude by construction, the wavelet returning
-relative band energy and the spectrogram being normalised per image, while the
-other two keep the absolute scale that varies with load. Comparing them as they
-stand would settle any hypothesis about amplitude through the preprocessing
-rather than the representation, so an ablation was fixed before the experiment
-was run: time-domain statistics and FFT magnitude recomputed on windows divided
-by their RMS value, with SVM-RBF and Random Forest over the twelve off-diagonal
-pairs. After normalisation the RMS descriptor equals one in all 5887 windows and
-kurtosis is unchanged.
+Two of the four discard amplitude by construction, the wavelet through relative
+band energy and the spectrogram through per-image normalisation, while the other
+two keep the absolute scale, which varies between loads. An ablation was therefore
+fixed before the experiment was run: time-domain statistics and FFT magnitude
+recomputed on windows divided by their RMS value, with SVM-RBF and Random Forest
+over the twelve off-diagonal pairs.
 
 \subsection{Classifiers}
 
@@ -391,21 +352,27 @@ Three classifiers that accept vectors were used with all four representations:
 SVM with RBF kernel, Random Forest with 300 trees and a two-layer perceptron of
 128 and 64 units trained for at most 500 iterations, all from scikit-learn
 \cite{pedregosa2011}. Class weighting was balanced for the SVM and the forest;
-the perceptron accepts neither class nor sample weights. A standard scaler was
+the perceptron has no class-weight option and was trained unweighted. A standard scaler was
 fitted on the training fold for the SVM and the perceptron, and omitted for the
-forest. Hyperparameters were left at the library defaults, so that all four
-representations meet each classifier under identical settings. A nested search
-on an inner split of the training blocks was possible without touching the test
-block; not running one is a limitation, not a constraint of the design.
+forest. Otherwise, hyperparameters were left at the library defaults in the protocol, so
+that all four representations meet each classifier under identical settings.
+For the SVM this fixes $C = 1$ and $\gamma = 1/(d\,\mathrm{Var}(X))$, which runs
+from $1/1025$ for FFT magnitude to $1/6$ for the wavelet energies.
+
+As a sensitivity analysis added in revision, each classifier was also tuned by
+nested search on training data only: for each training load and fold, each of
+the four training blocks was held out in turn and the configuration with the
+best mean inner macro-F1 was refitted on all four, without the test load or
+block. The 12 SVM, 6 forest and 6 perceptron configurations, the tie rule and
+the choice in each fold are in the supplementary material. Since the inner
+validation stays within one load, where macro-F1 saturates, the search
+optimises in-domain performance, not transfer.
 
 A two-dimensional convolutional network provides a reference row: three blocks
 of 32, 64 and 128 channels with batch normalisation and max pooling, then global
 average pooling and a linear layer, in PyTorch \cite{paszke2019}, trained on
 $64\times64$ spectrograms for a fixed 30 epochs with Adam at $10^{-3}$ and a
-batch of 64. The epoch count is fixed rather than set by early stopping, since a
-validation set would either shrink the training set relative to the other
-classifiers or select on the test block. The network appears in Table
-\ref{tab:f1} but takes no part in the statistical comparison: it has no
+batch of 64. The epoch count was not tuned, and the network is a descriptive reference only: it has no
 counterpart for the other three representations, and an unbalanced design
 invalidates both Friedman and the ANOVA.
 
@@ -414,37 +381,49 @@ invalidates both Friedman and the ANOVA.
 The design covers 4 representations $\times$ 3 vector classifiers $\times$ 16
 cells $\times$ 5 folds, that is 960 fits, plus 80 for the convolutional
 reference and 240 for the ablation. The seed was fixed at 42 and results stored
-per fold. The network ran on an RTX 4050 laptop GPU and the rest on CPU.
+per fold. 
 
-The statistical procedure was fixed before the comparison was run, following \cite{demsar2006}. The primary test is a Friedman test
-over the four representations with the twelve off-diagonal pairs as blocks
-($N = 12$, $k = 4$), using macro-F1 averaged over the three classifiers and the
-five folds, with a Nemenyi post-hoc test and a critical difference diagram.
-The three classifiers share the partition and the signal, so treating each
-(pair, classifier) combination as an independent block would raise $N$ to 48 and
-halve the critical distance to about 0.68 on the strength of that dependence. As a robustness check a separate Friedman test was
-run per classifier, again with $N = 12$, at a Bonferroni-corrected $\alpha = 0.0167$.
+Analyses differ in status. The protocol, fixed on 20 August 2026 before the data
+were split, specified a Friedman test over the four representations with the
+off-diagonal pairs as blocks, a Nemenyi post-hoc test and a two-way ANOVA of
+representation by load distance. On 22--23 August, before the experiment, the
+primary test was set to macro-F1 averaged over classifiers and folds ($N = 12$,
+$k = 4$) \cite{demsar2006}, one Friedman test per classifier was added at a
+Bonferroni-corrected $\alpha = 0.0167$, and the amplitude ablation was fixed.
+Only these are confirmatory; every later analysis is exploratory, with
+uncorrected $p$-values.
 
-A two-way ANOVA on macro-F1 examines representation and load distance (1, 2 or
-3 HP of separation; distance 0 is the diagonal and is excluded) with their
-interaction, over 240 observations, reporting partial eta squared as the effect
-size. Two exploratory departures accompany it. Those 240 observations are 5
-folds within each of 48 cells, and folds of one cell share four fifths of their
-training windows, so the model was refitted on the 48 cell means. It also
-averages over the classifier and so cannot test any term involving it, which a
-three-way model on the 144 (representation, classifier, pair) cell means
-supplies. The
-ablation is reported as a paired difference with a bootstrap confidence interval
-and Cliff's delta, since only two conditions are compared.
+Averaging the classifiers keeps $N$ at 12, since counting each (pair,
+classifier) as a block would rest on their shared partition. The pairs are not
+independent either: each load appears in six, and $(i, j)$ and $(j, i)$ reuse
+the same records. The effective $N$ is below 12, so the Friedman test is
+anticonservative and the Nemenyi critical distance too short, which weakens the
+rejecting per-classifier tests more than the non-rejecting primary one. Two analyses added in revision address this dependence. A linear mixed model on the cell means
+models it, with training load and test load as crossed random effects and their
+interactions with representation and with representation by classifier, tested
+by likelihood ratio with a 999-replicate parametric bootstrap. A
+leave-one-load-out jackknife of the Friedman tests, the interaction and the drops
+measures how much each result depends on a single load. With four loads no inferential procedure is fully
+reliable, so all $p$-values are indicative.
+
+The two-way ANOVA of the protocol treats folds as replicates although they share
+four fifths of their training windows, so its degrees of freedom, $p$-values and
+effect sizes are not interpreted. It was refitted on the 48 cell means, and a
+three-way model on the 144 (representation, classifier, pair) cell means adds
+the classifier, with a variant blocking on the pair. These cell means are not
+independent either, so the residual degrees of freedom are overstated and the
+$p$-values of these models are anticonservative. The ablation is reported, as in
+the protocol, as a paired difference over the 60 fold-level differences with a
+bootstrap interval and Cliff's delta; since folds share training windows, the
+intervals were also computed over the twelve pairs (supplementary material).
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=8.17cm]{figures/fig1_p7.pdf}
 \end{center}
-\caption{Raw drive-end acceleration signals at 0 HP, one 2048-sample window per
-class. (a) Normal, (b) inner race, (c) ball, (d) outer race. Each panel has its
-own $y$-axis scale: record RMS ranges from 0.066 g (Normal) to 0.425 g (outer
-race), so a shared scale would flatten three panels.}
+\caption{Raw drive-end acceleration at 0 HP, one 2048-sample window per class:
+(a) Normal, (b) inner race, (c) ball, (d) outer race. Each panel has its own
+$y$-axis scale.}
 \label{fig:senales}
 \end{figure}
 
@@ -452,12 +431,10 @@ race), so a shared scale would flatten three panels.}
 \begin{center}
 \includegraphics[width=8.17cm]{figures/fig2_p7.pdf}
 \end{center}
-\caption{Same inner-race fault window at 0 HP under the four representations.
-(a) Time-domain statistics, (b) FFT magnitude, (c) db4 wavelet relative energy
-per band, (d) STFT spectrogram on the $64\times64$ CNN grid, not the
-$16\times64$ grid that enters the comparison. The twelve descriptors of (a) do
-not share units; wavelet bands run from coarsest approximation (A5) to finest
-detail (D1).}
+\caption{Same inner-race window at 0 HP under the four representations:
+(a) time-domain statistics, (b) FFT magnitude, (c) db4 wavelet relative energy
+per band, from A5 to D1, (d) STFT spectrogram on the $64\times64$ CNN grid, not
+the $16\times64$ grid that enters the comparison.}
 \label{fig:repr}
 \end{figure}
 
@@ -470,16 +447,16 @@ over classifiers: 0.9997 for FFT magnitude, 0.9925 for the spectrogram, 0.9882
 for time-domain statistics and 0.9602 for the wavelet, with the breakdown by
 classifier in Table \ref{tab:f1}. Under four hundredths separate best from worst
 and ten of the twelve representation-classifier combinations sit at or above
-0.98, so
-a comparison restricted to the training condition separates little.
+0.98, so on this dataset a comparison restricted to the training condition
+separates little.
 
 \begin{table}[H]
 \centering
 \captionof{table}{Macro-F1 (mean $\pm$ standard deviation over folds and cells)
-in-domain and out-of-domain, by representation and classifier. The convolutional
-network is a reference row and takes part in neither Friedman nor the ANOVA.
-The best value in each column is in bold, among the twelve rows that enter the
-comparison; the in-domain column has two rows tied at 1.000.}
+in-domain and out-of-domain, by representation and classifier, with default
+hyperparameters. Bold marks the best value per column among the twelve compared
+rows; the in-domain column has two tied at 1.000. The convolutional network,
+below the line, is a descriptive reference and enters no comparison.}
 \label{tab:f1}
 \resizebox{\columnwidth}{!}{
 \begin{tabular}{llcc}
@@ -499,7 +476,8 @@ STFT spectrogram & MLP           & 0.998 $\pm$ 0.003 & 0.916 $\pm$ 0.056 \\
 STFT spectrogram & Random Forest & 0.980 $\pm$ 0.011 & 0.898 $\pm$ 0.069 \\
 STFT spectrogram & SVM-RBF       & 0.999 $\pm$ 0.001 & 0.942 $\pm$ 0.054 \\
 \midrule
-CNN 2D (reference) & CNN2D  & 0.971 $\pm$ 0.116 & 0.957 $\pm$ 0.119 \\
+\multicolumn{4}{l}{\textit{Descriptive reference, not compared}} \\
+CNN 2D spectrogram & CNN2D  & 0.971 $\pm$ 0.116 & 0.957 $\pm$ 0.119 \\
 \bottomrule
 \end{tabular}}
 \end{table}
@@ -508,40 +486,36 @@ CNN 2D (reference) & CNN2D  & 0.971 $\pm$ 0.116 & 0.957 $\pm$ 0.119 \\
 
 Figure \ref{fig:mapa} shows macro-F1 for every (training load, test load) pair,
 one panel per representation, diagonal boxed. Averaged over the twelve
-off-diagonal cells, the drop from the diagonal is 0.074 for the spectrogram,
+off-diagonal cells, the drop from the diagonal is 0.0740 for the spectrogram,
 0.0995 for FFT magnitude, 0.1029 for the wavelet and 0.1534 for time-domain
-statistics. Resampling the twelve pairs gives intervals of 0.043--0.105,
-0.080--0.122, 0.073--0.133 and 0.074--0.240, which all overlap; the pairs
-share loads, so the intervals are approximate (Section 3.6). Time-domain
-statistics, which retain absolute amplitude, degrade most, but FFT magnitude,
-which also retains it and carries no time information, degrades slightly less
-than the amplitude-invariant wavelet: the ordering follows neither amplitude
-nor time-frequency content.
+statistics. These are numerical differences. Resampling the twelve pairs gives intervals of 0.043--0.105, 0.080--0.122,
+0.073--0.133 and 0.074--0.240, approximate because the pairs share loads; the
+primary test reported below does not separate the four representations, and
+leaving one load out moves the drops within 0.052--0.096, 0.074--0.113,
+0.067--0.132 and 0.024--0.207, reversing the position of time-domain statistics.
+No ordering is statistically supported, and the smaller drop
+of the spectrogram is not evidence that it is intrinsically more robust to load
+changes. Descriptively, the large drop of time-domain statistics comes from
+transfers involving 0 HP: without that load it is 0.024, the smallest of the
+four.
 
-Degradation grows with load distance at different rates: at one step the four
-lie between 0.887 and 0.943 and at three steps between 0.655 and 0.880, most of
-the widening from time-domain statistics.
+
 
 The matrix is also asymmetric. With time-domain statistics, training at 0 HP and
 testing at 1 HP gives 0.795 against 0.678 for the reverse; at maximum separation
 the two directions give 0.771 and 0.539, the worst cell of the matrix. With
 statistics and the wavelet, testing at 0 HP is harder in every pair, and the
-healthy class has 233 windows there against about 468 elsewhere; FFT magnitude
-shows the opposite asymmetry, so the imbalance alone does not explain it.
+healthy class has 233 windows there against about 468 elsewhere, while FFT
+magnitude shows the opposite asymmetry. The healthy class does not account for all of it. Averaged over pairs, macro-F1 transferring towards the lower load minus
+towards the higher is $-0.082$ for time-domain statistics and $-0.063$ with the
+healthy class excluded, and the other three representations also keep their sign
+without it.
 
-The spectrogram is also the most expensive of the four to extract, 5.96 s over
-the 5887 windows against 0.27 s for FFT magnitude.
-
-The convolutional reference scores 0.971 in-domain, below every vector
-representation except the wavelet (0.960), and 0.957 out of domain, the
-highest, a drop of 0.0135. A training failure
-governs both. Trained at 0, 1 and 2 HP it reaches 0.998, 1.000 and 0.992
-in-domain, and 0.892 $\pm$ 0.230 at 3 HP; the deficit is one of the five folds
-at 3 HP, whose four cells fall between 0.396 and 0.489, consistent with the
-network not converging within the fixed 30 epochs. That fold also produces the
-standard deviations of 0.116 and 0.119. It is reported as it ran, since the
-epoch budget was fixed in advance. The row is descriptive and its apparent
-advantage in transfer should not be read as one.
+The convolutional network is a descriptive reference only (Table \ref{tab:f1}):
+it uses a different input and architecture and enters no comparison. Trained at
+3 HP it failed in one of the five folds, whose four cells fall between 0.396 and
+0.489 and produce its standard deviations of 0.116 and 0.119; it is reported as
+it ran, since the epoch budget was fixed in advance.
 
 % Fig. 3 es mas ancha que una columna (16 cm) y no cabe a media columna, asi
 % que no puede ir con [H] dentro del flujo de multicols como las demas figuras
@@ -564,8 +538,7 @@ advantage in transfer should not be read as one.
 three vector classifiers and 5 folds. Rows are the training load and columns the
 test load. (a) Statistical, (b) FFT, (c) Wavelet db4,
 (d) STFT spectrogram. The diagonal is a reference cell, boxed for orientation,
-and takes part in neither Friedman nor the ANOVA: with a single Normal recording
-per load it does not admit a record-level split.}
+and takes part in no test.}
 \label{fig:mapa}
 \end{figure}
 \begin{multicols}{2}
@@ -573,56 +546,60 @@ per load it does not admit a record-level split.}
 
 \subsection{No consistent ranking across classifiers}
 
-The primary Friedman test over the twelve off-diagonal pairs does not reject:
-$\chi^2 = 5.20$, $p = 0.158$, with mean ranks of 1.833 for the spectrogram,
-2.500 for FFT magnitude, 2.667 for time-domain statistics and 3.000 for the
-wavelet, against a Nemenyi critical distance of 1.354. No pair is separated in
-the critical difference diagram of Figure \ref{fig:nemenyi}, the smallest
-post-hoc $p$-value being 0.119, between the wavelet and the spectrogram.
+With the default settings of the protocol, the primary Friedman test over the
+twelve off-diagonal pairs does not reject ($\chi^2 = 5.20$, $p = 0.158$; mean
+ranks 1.833 for the spectrogram, 2.500 for FFT magnitude, 2.667 for time-domain
+statistics and 3.000 for the wavelet, against a Nemenyi critical distance of
+1.354), and no pair is separated in Figure \ref{fig:nemenyi}, the smallest
+post-hoc $p$-value being 0.119.
 
-The three per-classifier tests each reject and disagree on the ordering. The
-spectrogram ranks first with SVM-RBF ($\chi^2 = 17.10$, $p = 0.00067$), where
-FFT magnitude ranks last at 3.500; FFT magnitude ranks first with Random Forest
-($\chi^2 = 13.70$, $p = 0.0033$, rank 1.333) and with the perceptron
-($\chi^2 = 21.00$, $p = 0.00011$, rank 1.083), all three surviving the
-Bonferroni-corrected $\alpha = 0.0167$. Averaging them for the primary test
-cancels that disagreement, which is why the omnibus test does not reject while
-its components do.
+The three per-classifier tests each reject at the Bonferroni-corrected
+$\alpha = 0.0167$ and disagree on the ordering. The spectrogram ranks first with
+SVM-RBF ($\chi^2 = 17.10$, $p = 0.00067$), where FFT magnitude ranks last at
+3.500, while FFT magnitude ranks first with Random Forest ($\chi^2 = 13.70$,
+$p = 0.0033$, rank 1.333) and the perceptron ($\chi^2 = 21.00$, $p = 0.00011$,
+rank 1.083). Averaging them can offset that disagreement, which is consistent with the omnibus
+test not rejecting while its components do.
 
-The two-way ANOVA of the protocol, over the 240 fold-level observations, returns
-representation ($F = 15.93$, $\eta^2_p = 0.173$), load distance ($F = 35.51$,
-$\eta^2_p = 0.238$) and their interaction ($F = 5.14$, $\eta^2_p = 0.119$) as
-significant at $p < 0.001$ over 228 residual degrees of freedom. Those degrees
-of freedom assume independent folds, and consecutive folds share four fifths of
-their training windows. Refitting on the 48 cell means removes the assumption
-and most of the result: load distance survives ($F = 5.85$, $p = 0.006$),
-representation falls to $F = 2.62$, $p = 0.065$, and the representation by
-load-distance interaction to $F = 0.85$, $p = 0.543$. That interaction is an
-artefact of treating folds as replicates and is not claimed here.
+The fold-level ANOVA of the protocol is not interpreted. On the 48 cell means
+only load distance remains ($F = 5.85$, $p = 0.006$); representation gives
+$F = 2.62$, $p = 0.065$, and its interaction with load distance $F = 0.85$,
+$p = 0.543$. Adding the classifier locates the effect elsewhere (Table
+\ref{tab:anova}): in these configurations the representation by classifier
+interaction is the largest term ($F = 4.91$, $p < 0.001$, $\eta^2_p = 0.214$),
+while representation by load distance is not significant ($F = 1.76$,
+$p = 0.113$). With the pair as a block the interaction stays at $F = 5.78$
+($p < 0.001$) and the block has the largest partial effect size ($\eta^2_p = 0.307$) in this
+exploratory model.
 
-Adding the classifier as a factor locates the effect elsewhere (Table
-\ref{tab:anova}). The representation by classifier interaction is the largest
-term of the model ($F = 4.91$, $p < 0.001$, $\eta^2_p = 0.214$), above every main
-effect, while representation by load distance is not significant ($F = 1.76$,
-$p = 0.113$). The effect of representation depends on the classifier, which the
-three disagreeing Friedman tests already indicated.
+The analyses added for the dependence between pairs qualify these results
+without overturning them. In the jackknife the interaction remains in all four
+reduced sets ($F$ from 2.72 to 11.66, $p \le 0.022$) and each per-classifier
+leader is unchanged (once tied), although with $N = 6$ eight of the twelve tests
+fall short of the corrected threshold (Kendall's $W$ from 0.30 to 0.94). The
+primary ordering is less stable: without 0 HP time-domain statistics rank first
+and the test rejects ($p = 0.006$), and without any other load they rank last.
+The mixed model could be fitted only without the classifier by load terms, and
+a quarter or more of its bootstrap refits failed, so its likelihood ratios, 2.29
+for representation and 21.74 for the interaction (indicative $p = 0.61$ and
+$0.005$), are not relied on.
 
-That model treats the twelve pairs as interchangeable replicates within each
-level of load distance, and they are not: every load appears in six of them.
-Entering the pair as a block absorbs the dependence, at the cost of load
-distance, which is a function of the pair and leaves the model. The interaction
-survives and grows slightly ($F = 5.78$, $p < 0.001$, $\eta^2_p = 0.223$ over 121
-residual degrees of freedom), while the block takes the largest share
-($F = 4.87$, $\eta^2_p = 0.307$): which two loads are crossed matters more than
-any factor of the design, and load distance does not capture all of it. All
-models beyond the one specified in the protocol are exploratory and their
-$p$-values are uncorrected.
+Nested tuning changes the rankings but not the disagreement. The per-classifier
+tests still reject with the same leaders, the blocked interaction stays at
+$F = 4.66$ ($p < 0.001$), and the primary test now rejects ($\chi^2 = 9.30$,
+$p = 0.026$; mean ranks 1.92 for FFT magnitude, 2.17 for the spectrogram, 2.50
+for the statistics and 3.42 for the wavelet). The change comes mostly from the
+SVM: tuning raised its cross-load macro-F1 with FFT magnitude from 0.774 to
+0.833, out of last place, and with the wavelet raised in-domain macro-F1 from
+0.929 to 0.975 while cutting cross-load macro-F1 from 0.850 to 0.680, consistent with an inner validation that rewards fit to the training load. The forest kept its defaults
+in 69 of 80 models. The rankings are therefore specific to the configurations
+evaluated, not the best each representation can reach, and whether the primary test rejects depends on them.
 
 \begin{table}[H]
 \centering
 \captionof{table}{Exploratory three-way ANOVA on macro-F1 over the 144
-off-diagonal cells, with the five folds of each cell averaged. The diagonal is
-excluded and the convolutional network takes no part.}
+off-diagonal cell means, with default hyperparameters; $p$-values are not
+adjusted for the dependence between cells.}
 \label{tab:anova}
 \resizebox{\columnwidth}{!}{
 \begin{tabular}{lrrrrr}
@@ -658,121 +635,109 @@ Over the off-diagonal cells recall is highest for the healthy class (0.994) and
 lowest for inner race faults at 0.014 in (0.587). The next four subgroups are
 ball at 0.021 in (0.786), inner race at 0.021 in (0.823), inner race at 0.007 in
 (0.832) and outer race at 0.014 in (0.849); the remaining four sit above 0.89.
-Only the first is separated from the rest by a wide margin.
+For inner race faults at 0.014 in recall is 0.836 with FFT magnitude against
+0.485 with the spectrogram, 0.494 with time-domain statistics and 0.533 with the
+wavelet. These figures describe where classification fails across loads, not why: label
+verification found weak signatures in two of the weaker subgroups but not in the
+weakest, and nothing here identifies a physical cause. The subgroup analysis
+is descriptive and secondary to the question of the study.
 
-Envelope verification had already identified two of those subgroups, the outer
-race records at 0.014 in and the ball records at 0.021 in, as having a weak
-signature. The inner race subgroup at 0.014 in was not, since envelope analysis
-confirmed all twelve inner race records. The two ask different questions:
-whether the signature is detectable within a record, and whether a classifier
-trained on one load recognises it at another. The representations disagree
-sharply on it, recall being 0.836 with
-FFT magnitude against 0.485 with the spectrogram, 0.494 with time-domain
-statistics and 0.533 with the wavelet, so a single subgroup carries part of the
-representation by classifier interaction.
+\subsection{Amplitude normalisation in the tested configurations}
 
-\subsection{Amplitude normalisation does not explain the transfer gap}
-
-The ordering in the cross-load results suggests that representations retaining
-absolute amplitude degrade because amplitude scales with load. The ablation
-tests it by dividing each window by its RMS value before extracting the two
-amplitude-dependent representations. No combination improved by an interval that
-excludes zero, and two degraded. With Random Forest, time-domain statistics lost 0.149 macro-F1 (95 \% CI
-$-0.197$ to $-0.103$, Cliff's delta $-0.472$) and FFT magnitude lost 0.133
-(95 \% CI $-0.151$ to $-0.116$, delta $-0.750$). With SVM-RBF both intervals
-cross zero: $-0.018$ for statistics (95 \% CI $-0.047$ to $+0.011$, delta
-$-0.205$) and $+0.033$
-for FFT (95 \% CI $-0.002$ to $+0.067$, delta 0.330). That last interval
-contains zero, so the ablation separates the two classifiers rather
-than ruling out any benefit: normalisation is harmful with the forest and of
-uncertain benefit with the SVM.
+The hypothesis behind the ablation is that representations retaining absolute
+amplitude degrade because amplitude scales with load. Dividing each window by
+its RMS value before extracting time-domain statistics and FFT magnitude tests
+that procedure with SVM-RBF and Random Forest. No combination improved by an
+interval that excludes zero, and two degraded. With Random Forest, time-domain
+statistics lost 0.149 macro-F1 (95 \% CI $-0.197$ to $-0.103$, Cliff's delta
+$-0.472$) and FFT magnitude lost 0.133 (95 \% CI $-0.151$ to $-0.116$, delta
+$-0.750$). With SVM-RBF both intervals cross zero: $-0.018$ for statistics
+(95 \% CI $-0.047$ to $+0.011$, delta $-0.205$) and $+0.033$ for FFT (95 \% CI
+$-0.002$ to $+0.067$, delta 0.330). The result separates the two classifiers
+rather than ruling out any benefit. It does not show that amplitude
+normalisation is ineffective in general, only that this procedure gave no
+consistent improvement here; on this dataset, removing amplitude this way is
+inadvisable with the forest and of uncertain effect with the SVM.
 
 \subsection{Limitations}
 
 Each combination of fault type and diameter in the CWRU dataset is a single
 physical bearing measured under four loads, so crossing loads keeps the bearing
 fixed and a model may rely on the signature of that specimen rather than on the
-fault type. The degradation measured here is therefore a lower bound, and
-external validation on another machine is left as future work.
+fault type. The results measure transfer between loads of the same specimens,
+not generalisation to other bearings or machines. For that purpose they are
+likely optimistic, since specimen-specific cues may survive a change of load, and
+they should not be carried to industrial settings without external validation.
 
 The diagonal cells cannot use a record-level split, since the dataset provides
-one healthy record per load. Their purged blocks remove leakage through overlap
-but not the correlation of sharing a record; they are excluded from every test
-and the in-domain figures of Table \ref{tab:f1} are a reference level, not an
-estimate of generalisation. That single healthy record also leaves the class
-imbalanced differently across loads, 233 windows at 0 HP against about 468
-elsewhere. Macro-F1 and class weighting mitigate this, but the perceptron
-accepts no class weights and the direction asymmetry reported above is
-consistent with the imbalance being part of the cause rather than an effect of
-load alone.
+one healthy record per load, so the in-domain figures of Table \ref{tab:f1} are
+a reference level, not an estimate of generalisation. The same record leaves
+the healthy class imbalanced differently across loads, 233 windows at 0 HP
+against about 468 elsewhere; macro-F1 and class weighting mitigate this without
+removing the influence of the dataset structure, and the perceptron accepts no
+class weights. The drop of time-domain statistics is
+concentrated in transfers involving 0 HP, although the direction asymmetry is not confined to the healthy class.
 
-The envelope spectrum, the reference technique of the field and the one used
-here to verify the labels, is not among the four representations, which were
-fixed before the data were touched. It keeps the impact repetition rate and
-discards the carrier, which makes it the likeliest to transfer across loads, so
-its absence limits what the comparison covers.
+The envelope spectrum, used here to verify the labels, is not among the four representations, which limits
+what the comparison covers.
 
-Hyperparameters were left at their defaults, so the per-classifier ranking holds
-under those defaults only, and the four representations differ in dimension by
-two orders of magnitude, from 6 to 1025. The two interact: an untuned SVM on
-1025 FFT bins is a plausible partial explanation for FFT magnitude ranking last
-with that classifier and first with the other two. Equalising dimension was
-rejected because dimension is part of a representation, and a nested search on
-the training blocks would separate the two readings.
+Tuning used only the training load, so the tuned results are not the best
+transfer each representation can reach, and the grids are small. The four
+representations also differ in dimension from 6 to 1025, which the default
+$\gamma$ of the SVM ties to the kernel width; dimension was not equalised
+because it is part of a representation.
 
-The twelve blocks of the Friedman test are not independent. Each load appears in
-six pairs, and the pairs $(i,j)$ and $(j,i)$ use the same two sets of records
-with the roles exchanged, so the exchangeability the test assumes is violated in
-a direction that cannot be signed without a variance component per load. The
-blocked ANOVA above measures how much variance the pair carries, but no test
-here escapes the dependence and, with four loads, no design on this dataset
-would. The $p$-value of 0.158 is a failure to separate the four representations,
-not evidence that they are equivalent. For the same reason the results are not
-placed beside published cross-load figures, which are reported under partitions
-this protocol was designed to avoid: the difference would measure the partition
-rather than the method.
+With four loads every inference rests on few independent units: the mixed model
+could not be fitted in full, its bootstrap was unstable, and the jackknife
+leaves six pairs. The $p$-value of 0.158 is a failure to separate the four
+representations, not evidence that they are equivalent.
+
+Four limitations therefore remain unresolved: generalisation beyond one
+specimen per fault condition, which bounds every result; inference with four
+loads, which makes all $p$-values indicative; the dependence of the rankings on
+the configuration, which restricts them to the settings evaluated; and the cause
+of the weak subgroups, which these data do not identify.
 
 \section{Conclusions}
 
-Within a single load the four representations all exceed 0.95 macro-F1 and
-separate by less than four hundredths, so a comparison under the training
-condition alone does not identify a preferable one. Once the test load differs
-the spread widens, from 0.074 for the STFT spectrogram to 0.153 for time-domain
-statistics, the latter falling to 0.655 macro-F1 at three steps of separation.
-The bootstrap intervals of those four figures overlap, so the ordering they
-suggest is not established.
+Within a single load the four representations average above 0.95 macro-F1 and
+separate by less than four hundredths, so on this dataset a comparison under the
+training condition alone does not identify a preferable one. Across loads the
+mean drops range from 0.0740 for the STFT spectrogram to 0.1534 for time-domain
+statistics, but the primary test does not separate the representations and the largest depends on 0 HP, so
+no ordering is established.
 
-That spread does not translate into a general recommendation. The omnibus
-Friedman test over the twelve off-diagonal pairs does not reject
-($\chi^2 = 5.20$, $p = 0.158$), the three per-classifier tests each reject and
-place a different representation first, and the largest term of the factorial
-model is the representation by classifier interaction. FFT magnitude ranks last
-with SVM-RBF and first with the other two. Representation and classifier should
-therefore be chosen together, since a recommendation drawn from one classifier
-does not carry to another.
+No representation was superior across the classifiers and configurations
+evaluated. With default hyperparameters the omnibus Friedman test does not
+reject, which is not evidence of equivalence, while the per-classifier tests
+reject and place different representations first, FFT magnitude ranking last
+with SVM-RBF and first with the other two. The representation by classifier
+interaction persists when any load is left out and under nested tuning, which
+however changes the rankings and makes the omnibus test reject, so it is
+exploratory evidence specific to these configurations: on this dataset a
+representation is best assessed with the classifier it will be used with.
 
-The amplitude mechanism that motivated the ablation, that representations
-retaining absolute amplitude degrade because amplitude scales with load, was
-not supported. RMS normalisation improved cross-load
-transfer in none of the four tested combinations by an interval excluding zero,
-and degraded it with Random Forest by 0.149 for time-domain statistics and 0.133
-for FFT magnitude.
+Per-window RMS normalisation gave no clear improvement in cross-load transfer in
+the four tested combinations and degraded it with Random Forest, by 0.149 for time-domain
+statistics and 0.133 for FFT magnitude.
 
-External validation on a different machine would separate the degradation
-attributable to load from that masked by reusing one physical bearing per fault
-condition. Subgroup reporting would also repay attention: the inner race
-subgroup at 0.014 in reached a recall of 0.587 across loads, with the four
-representations disagreeing by more than three tenths.
+All of this concerns transfer between loads of the same bearings. External validation on other bearings and machines is needed before industrial use.
 
 %========================================================
 \section*{Data availability}
 
 % VERSION PARA REVISION DOBLE CIEGO: el identificador del repositorio se
 % retiene. Texto para la version aceptada: ver ENVIO.md del proyecto.
-The CWRU records are public \cite{cwru}. The analysis code, the per-fold results
-and the scripts generating every table and figure are deposited in a public
-repository with a DOI, withheld for double-blind review and provided upon
-acceptance.
+The CWRU records are public \cite{cwru}. The repository, withheld for
+double-blind review and provided upon acceptance, holds the per-fold results and
+the code of every step, from download, label verification, partition and
+leakage check to feature extraction, classifier configuration, metrics,
+statistics, nested tuning and figures. One command reruns the pipeline from the
+raw records, whose download by the first script is the only external step, and
+regenerates every table and figure. On CPU the results are identical with the
+fixed seed, although the perceptron on low-dimensional inputs also depends on the number of BLAS threads (the pipeline uses the default), and the
+convolutional network reproduces on the original GPU. A full rerun from a fresh copy of the repository
+regenerated every table identically, apart from timing columns.
 %========================================================
 
 \bibliography{referencias.bib}

@@ -1,0 +1,8 @@
+representacion,segundos_extraccion,fuente,versiones
+estadisticos,2.03,"data/processed/manifiesto.json, ultima ejecucion de 02_preprocess.py (no remedido)","{""numpy"": ""2.4.6"", ""scipy"": ""1.17.1"", ""pandas"": ""3.0.5"", ""pywavelets"": ""1.8.0""}"
+fft,0.27,"data/processed/manifiesto.json, ultima ejecucion de 02_preprocess.py (no remedido)","{""numpy"": ""2.4.6"", ""scipy"": ""1.17.1"", ""pandas"": ""3.0.5"", ""pywavelets"": ""1.8.0""}"
+wavelet,1.75,"data/processed/manifiesto.json, ultima ejecucion de 02_preprocess.py (no remedido)","{""numpy"": ""2.4.6"", ""scipy"": ""1.17.1"", ""pandas"": ""3.0.5"", ""pywavelets"": ""1.8.0""}"
+espectrograma,8.45,"data/processed/manifiesto.json, ultima ejecucion de 02_preprocess.py (no remedido)","{""numpy"": ""2.4.6"", ""scipy"": ""1.17.1"", ""pandas"": ""3.0.5"", ""pywavelets"": ""1.8.0""}"
+espectrograma_vector,5.96,"data/processed/manifiesto.json, ultima ejecucion de 02_preprocess.py (no remedido)","{""numpy"": ""2.4.6"", ""scipy"": ""1.17.1"", ""pandas"": ""3.0.5"", ""pywavelets"": ""1.8.0""}"
+estadisticos_rmsnorm,1.92,"data/processed/manifiesto.json, ultima ejecucion de 02_preprocess.py (no remedido)","{""numpy"": ""2.4.6"", ""scipy"": ""1.17.1"", ""pandas"": ""3.0.5"", ""pywavelets"": ""1.8.0""}"
+fft_rmsnorm,0.28,"data/processed/manifiesto.json, ultima ejecucion de 02_preprocess.py (no remedido)","{""numpy"": ""2.4.6"", ""scipy"": ""1.17.1"", ""pandas"": ""3.0.5"", ""pywavelets"": ""1.8.0""}"

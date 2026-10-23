@@ -49,3 +49,6 @@ paper/aplicar_revision_cruzada.py
 paper/manuscript.md
 paper/references.bib
 paper/llenar_carta_ingenius.py
+
+# Respuesta a la decision editorial (documentos internos, solo local)
+revision_editorial/

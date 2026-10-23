@@ -1,8 +1,8 @@
-"""P7 - analisis anadidos en la revision editorial (envio 14195, octubre de 2026).
+"""P7 - analisis anadidos en la revision editorial (octubre de 2026).
 
 NO es parte del protocolo original. Son los analisis E1-E5 especificados en la
-bitacora de PROTOCOLO.md el 19/10/2026, antes de ejecutar ninguno, en respuesta
-a la decision del editor del 19/10. Todo lo que sale de aqui es exploratorio o
+bitacora de PROTOCOLO.md el 19/10/2026, antes de ejecutar ninguno, durante la revision
+por pares. Todo lo que sale de aqui es exploratorio o
 de sensibilidad; lo confirmatorio sigue siendo el Friedman principal de 04.
 
 No entrena ningun clasificador. Lee `resultados_por_fold.csv`,

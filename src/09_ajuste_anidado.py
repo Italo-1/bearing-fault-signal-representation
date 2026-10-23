@@ -1,8 +1,8 @@
 """P7 - ajuste anidado de hiperparametros (revision editorial, octubre de 2026).
 
 NO es parte del protocolo original. Es el analisis E6 especificado en la
-bitacora de PROTOCOLO.md el 19/10/2026, antes de ejecutarlo, en respuesta a los
-puntos 3 y 4 de la decision del editor. Sus resultados se reportan AL LADO de
+bitacora de PROTOCOLO.md el 19/10/2026, antes de ejecutarlo, durante la revision por
+pares. Sus resultados se reportan AL LADO de
 los valores por defecto, que siguen siendo el diseno del protocolo.
 
 Diseno
